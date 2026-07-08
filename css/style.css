@@ -222,6 +222,39 @@ a:hover {
     color: white;
 }
 
+/* Bouton de Load More */
+#load-more-btn {
+    display: block;
+    margin: 20px auto;
+
+    padding: 10px 18px;
+    border: 1px solid rgba(23, 32, 43, 0.1);
+    border-radius: 999px;
+
+    background: #ffffff;
+    color: #333b44;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    box-shadow: 0 2px 8px rgba(23,32,43,0.04);
+}
+
+#load-more-btn:hover {
+    background: #FFF0D0;
+    border-color: #e7d6ae;
+    transform: translateY(-1px);
+}
+
+#load-more-btn.active {
+    background: #2a5bd7;
+    color: white;
+    border-color: #2a5bd7;
+}
+
 /* Boutons des filtres */
 .filters {
     display: flex;
@@ -371,10 +404,125 @@ a:hover {
 }
 
 /* Footer */
+
+.footer {
+
+    margin-top: 50px;
+    padding: 30px 20px;
+
+    border-top: 1px solid #e5e7eb;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    text-align: center;
+}
+
+.footer span {
+    font-size: 0.9rem;
+}
+
+.footer a {
+
+    color: #2563eb; /* bleu moderne */
+
+    text-decoration: none;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    transition: color 0.2s ease;
+}
+
+.footer a:hover {
+
+    color: #1d4ed8;
+
+    text-decoration: underline;
+}
+
+.footer-copy {
+
+    margin-top: 10px;
+
+    color: #9ca3af;
+
+    font-size: 0.8rem;
+}
+
 #logo_heg {
     width : 20%;
     height: auto;
 }
+
+/*Flèche pour remonter*/
+
+#back-to-top {
+
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #2563eb;
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 50%;
+
+    font-size: 1.3rem;
+    font-weight: bold;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: all 0.3s ease;
+
+    z-index: 1000;
+}
+
+#back-to-top.show {
+
+    opacity: 1;
+    visibility: visible;
+}
+
+#back-to-top:hover {
+
+    background: #1d4ed8;
+
+    transform: translateY(-3px);
+}
+
+/* Bouton retour */
+
+.btn-retour {
+    display: inline-block;
+
+    padding: 10px 16px;
+
+    background: #2563eb;
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 6px;
+}
+
+.btn-retour:hover {
+    background: #1d4ed8;
+}
+
 
 /* Responsive */
 @media (max-width: 600px) {
@@ -386,6 +534,16 @@ a:hover {
 
     .flag {
         margin-bottom: 10px;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .footer-contact {
+        text-align: center;
     }
 }
 

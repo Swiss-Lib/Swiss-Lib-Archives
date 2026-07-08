@@ -29,6 +29,7 @@ const FILTERS = {
     };
 </script>
         <header>
+            <a id="top"></a>
             <!-- Logo -->
             <div id="logo">
                 <img src="images/swiss-lib-logo-couleur.svg" />
@@ -77,74 +78,181 @@ const FILTERS = {
             <p>In order to using the list, you can post a message by sending email to <a href="mailto:swiss-lib@listserv.linguistlist.org" >swiss-lib@listserv.linguistlist.org.</a></p>
             <p>If you would like to subscribe to the list and receive all messages by email, <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">please find all the information below.</a> </p>
         
-        <!-- Données PHP des archives -->
-        <div id="archives-container"></div>
+            <!-- Filtre -->
+            <div class="filters">
+                <button onclick="filterPosts('all', this)">Tous</button>
 
+                <button onclick="filterPosts(FILTERS.emploi, this)">
+                    Emploi
+                </button>
+
+                <button onclick="filterPosts(FILTERS.evenements, this)">
+                    Événements
+                </button>
+
+                <button onclick="filterPosts(FILTERS.communaute, this)">
+                    Communauté
+                </button>
+
+                <button onclick="filterPosts(FILTERS.formations, this)">
+                    Formations
+                </button>
+
+                <button onclick="filterPosts(FILTERS.ressources, this)">
+                    Ressources
+                </button>
+
+                <button onclick="filterPosts(FILTERS.recherches, this)">
+                    Recherches et contributions
+                </button>
+
+                <button onclick="filterPosts(FILTERS.newsletter, this)">
+                    Newsletter
+                </button>
+            </div>
+            <!-- Recherche -->
+        <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                    d="M21 21L15.8 15.8M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                />
+            </svg>
+
+            <input
+                type="search"
+                id="search-category"
+                placeholder="Rechercher un message ou une catégorie..."
+                autocomplete="off"
+            />
+        </div>
+        <!-- Données PHP des archives -->
+        <div id="archives-container">
+                <p>Chargement des archives...</p>
+        </div>
+
+        
+        <!--Charger plus de messages-->
+        <button id="load-more-btn">
+            Voir plus...
+        </button>
+<a href="#top" id="back-to-top" aria-label="Retour en haut de page">
+    ↑
+</a>
 <script>
-fetch('http://localhost/swiss-lib/index.php')
+//Variables
+const API_URL = 'http://localhost/swiss-lib/index.php';
+let visiblePosts = 20; //posts visible par défaut
+const postsPerPage = 20; //posts par affichage
+let archivesData = null; //valeur par défaut des archives
+
+//Afficher les archives
+function renderArchives(data) {
+
+    archivesData = data;
+
+    const container = document.getElementById('archives-container');
+
+    let html = `
+        <h1 id="title_archive">Archives</h1>
+    `;
+
+    let displayedPosts = 0;
+
+    data.archives.forEach(archive => {
+
+        let archiveHtml = '';
+        let archiveHasPosts = false;
+
+        archive.posts.forEach(post => {
+
+            if (displayedPosts >= visiblePosts) {
+                return;
+            }
+
+            archiveHasPosts = true;
+            displayedPosts++;
+
+            const url =
+                'post_archives.html?id=' +
+                encodeURIComponent(post.url);
+
+            archiveHtml += `
+                <div class="card-archives"
+                     data-category="${post.title} ${post.author}">
+                    <a href="${url}">
+                        <span class="title">${post.title}</span>
+                        <span class="author">${post.author}</span>
+                    </a>
+                </div>
+            `;
+        });
+
+        if (archiveHasPosts) {
+
+            html += `
+                <h2>${archive.title}</h2>
+                <div class="cards-container-archives">
+                    ${archiveHtml}
+                </div>
+            `;
+        }
+
+    });
+
+    container.innerHTML = html;
+
+    updateLoadMoreButton();
+}
+
+//
+// 1 - Affichage instantané du cache navigateur
+//
+
+const cachedData = localStorage.getItem('archivesCache');
+
+if (cachedData) {
+
+    try {
+        renderArchives(JSON.parse(cachedData));
+    } catch(e) {
+        console.error(e);
+    }
+
+}
+
+//
+// 2 - Mise à jour depuis le serveur
+//
+
+fetch(API_URL)
     .then(response => response.json())
     .then(data => {
 
-        const container = document.getElementById('archives-container');
+        const newCache = JSON.stringify(data);
+        const oldCache = localStorage.getItem('archivesCache');
 
-        container.innerHTML = '';
+        if (newCache !== oldCache) {
 
-        const h1 = document.createElement('h1');
-        h1.id = 'title_archive';
-        h1.textContent = 'Archives';
+            localStorage.setItem(
+                'archivesCache',
+                newCache
+            );
 
-        container.appendChild(h1);
-
-        data.archives.forEach(archive => {
-
-            const h2 = document.createElement('h2');
-            h2.textContent = archive.title;
-
-            container.appendChild(h2);
-
-            const cardsContainer = document.createElement('div');
-            cardsContainer.className = 'cards-container-archives';
-
-            archive.posts.forEach(post => {
-
-                const card = document.createElement('div');
-                card.className = 'card-archives';
-
-                card.dataset.category =
-                    post.title + ' ' + post.author;
-
-                const link = document.createElement('a');
-                link.href =
-                'archives.html?id=' +
-                encodeURIComponent(post.url);
-
-
-                const title = document.createElement('span');
-                title.className = 'title';
-                title.textContent = post.title;
-
-                const author = document.createElement('span');
-                author.className = 'author';
-                author.textContent = post.author;
-
-                link.appendChild(title);
-                link.appendChild(author);
-
-                card.appendChild(link);
-
-                cardsContainer.appendChild(card);
-
-            });
-
-            container.appendChild(cardsContainer);
-
-        });
+            renderArchives(data);
+        }
 
     })
     .catch(error => {
         console.error(error);
     });
-            
+
+//
+// Filtres
+//
+
 function filterPosts(filter, button_object) {
 
     const posts = document.querySelectorAll('.card-archives');
@@ -161,54 +269,113 @@ function filterPosts(filter, button_object) {
 
         const match =
             filter === 'all'
-            ? true
-            : filter.test(title);
+                ? true
+                : filter.test(title);
 
         post.style.display = match ? '' : 'none';
 
     });
 }
 
+//
+// Mise à jour des posts visibles
+//
 
+function updateLoadMoreButton() {
 
+    const totalPosts = archivesData.archives.reduce(
+        (sum, archive) => sum + archive.posts.length,
+        0
+    );
+
+    const button = document.getElementById('load-more-btn');
+
+    if (visiblePosts >= totalPosts) {
+
+        button.style.display = 'none';
+
+    } else {
+
+        button.style.display = '';
+    }
+}
+
+document
+    .getElementById('load-more-btn')
+    .addEventListener('click', () => {
+
+        visiblePosts += postsPerPage;
+
+        renderArchives(archivesData);
+
+    });
+//
+// Recherche texte
+//
 
 document.addEventListener('DOMContentLoaded', () => {
 
     const searchInput = document.getElementById('search-category');
-    const cards = document.querySelectorAll('.card-archives');
+
+    if (!searchInput) return;
 
     searchInput.addEventListener('input', () => {
 
-        const search = searchInput.value.trim().toLowerCase();
+        const search = searchInput.value
+            .trim()
+            .toLowerCase();
 
-        cards.forEach(card => {
+        document
+            .querySelectorAll('.card-archives')
+            .forEach(card => {
 
-            const category = (card.dataset.category || '').toLowerCase();
+                const category =
+                    (card.dataset.category || '')
+                    .toLowerCase();
 
-            if (category.includes(search)) {
-                card.style.display = '';
-            } else {
-                card.style.display = 'none';
-            }
-
-        });
+                card.style.display =
+                    category.includes(search)
+                        ? ''
+                        : 'none';
+            });
 
     });
 
 });
+
+
+/* Retour en haut */
+
+const backToTop = document.getElementById('back-to-top');
+
+window.addEventListener('scroll', () => {
+
+    if (window.scrollY > 300) {
+        backToTop.classList.add('show');
+    } else {
+        backToTop.classList.remove('show');
+    }
+
+});
+
 </script>
 
-    <footer class="content_page" style="text-align: center;">
-        <hr>
-        <address><a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">Swiss-Lib</a><p>
-            <table WIDTH="100%" BORDER="0">
-            <tr>
-                <td><a href="http://www.gnu.org/software/mailman/index.html"><img src="/images/mailman/mailman.jpg" alt="Delivered by Mailman" /><br>version 2.1.29</a></td>
-                <td><a href="https://www.hesge.ch/heg/formations/bachelors/information-science#aperu-de-la-formation"><img id="logo_heg" src="images/heg-logo-haute-res-transp.png" alt="Logo HEG" border="0"/></a></td>
-            </tr>
-            </table>
-        </address>
-    </footer>
+
+
+</main>
+<footer class="footer">
+
+    <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">Swiss-Lib</a>
+    <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib#subscribe">S'abonner à la liste</a>
+    <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib#using_swiss_lib">Poster sur la liste</a>
+    <span>Contact : <a href="mailto:info@swisslib.ch">info@swisslib.ch</a></span>
+   
+    <div class="footer-copy">
+        Archives © 2026 - Swiss-Lib
+    </div>
+
+</footer>
+
     </body>
 </html>
 

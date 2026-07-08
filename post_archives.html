@@ -21,8 +21,9 @@
             </div>
         </header>
         <main>
-  
-       
+        <a href="index.html" class="btn-retour">
+            Revenir à l'accueil
+        </a>
         <!-- Récupération du JSON -->
          <div id="post-container"></div>
 
@@ -30,9 +31,11 @@
 
 const params = new URLSearchParams(window.location.search);
 
+const id = new URLSearchParams(location.search)
+    .get('id');
+
 fetch(
-    'http://localhost/swiss-lib/post_archives.php?id=' +
-    encodeURIComponent(params.get('id'))
+    'http://localhost/swiss-lib/post_archives.php?id=' + id
 )
 .then(response => response.json())
 .then(data => {
@@ -65,6 +68,19 @@ fetch(
 
 </script>
         </main>
+
+        <footer class="footer">
+
+    <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">Swiss-Lib</a>
+    <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib#subscribe">S'abonner à la liste</a>
+    <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib#using_swiss_lib">Poster sur la liste</a>
+    <span>Contact : <a href="mailto:info@swisslib.ch">info@swisslib.ch</a></span>
+   
+    <div class="footer-copy">
+        Archives © 2026 - Swiss-Lib
+    </div>
+
+</footer>
                         </body>
                         </html>
 
