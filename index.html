@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!-- saved from url=(0021)https://swisslib.org/ -->
+<html dir="ltr" lang="fr">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Swiss-Lib</title>
+        <link href="css/style.css" rel="stylesheet" />
+        <link rel="icon" type="image/x-icon" href="images/favicon-szinwnhl.png">
+    </head>
+
+    <body class="no-touch">
+<script>
+const FILTERS = {
+
+        emploi: /(emploi|stage|apprentissage|pre.stage|pré.stage|hes|cdi|cdd|demande.emploi|spontan|arbeit|praktikum|lehrstelle|fh.vorpraktikum|vorpraktikum|unbefristet|befristet|einstellung|spontanbewerbung|lavoro|apprendistato|tirocinio|pre.tirocinio|sup|cti|ctd|candidatura|vacancy|hiring|recruitment|poste|stelle|job)/i,
+
+        evenements: /(evenement|event|symposium|veranstaltung|jahrestagung|evento|conference|kongress|convegno|colloque|journee|tagung|giornata|webinaire|webinar|salon|messe|fiera)/i,
+
+        communaute: /(communaute|communautes|community|gemeinschaft|comunita|annonce|ankündigung|annuncio|information|actualite|neuigkeit|notizia|news)/i,
+
+        formations: /(formation\s+continue|formation|formations|continuing\s+professional\s+development|weiterbildung|weiterbildungskurs|formazione\s+continua|competences|competencies|skills|kompetenzen|competenze)/i,
+
+        ressources: /(ressource|ressources|resource|ressourcen|risorsa|outil|tool|werkzeug|strumento|guide|leitfaden|guida|publication|publikation|pubblicazione|rapport|bericht|rapporto)/i,
+
+        recherches: /(recherches?\s+et\s+contributions?|recherche|contribution|forschung|ricerca|appel|aufruf|chiamata|call|enquete|umfrage|sondaggio|survey|collaborat|projet|projekt|progetto)/i,
+
+        newsletter: /(newsletter)/i
+
+    };
+</script>
+        <header>
+            <!-- Logo -->
+            <div id="logo">
+                <img src="images/swiss-lib-logo-couleur.svg" />
+            </div>
+            <h1 class="title">
+                    Bienvenue sur Swiss-Lib / Willkommen Swiss-Lib/ Benvenuti in Swiss-Lib
+            </h1>
+            <div class="container">
+                <!-- Bloc FR -->
+                <div class="card">
+                    <div class="flag">
+                        <img src="https://flagcdn.com/w40/fr.png" alt="FR">
+                    </div>
+                    <div class="content">
+                        <p><strong>Pour accéder aux messages de la plateforme, référez-vous à la section <a href="#title_archive">Archives</a> !</strong></p>
+                        <p>La documentation HEG est disponible en suivant ce lien : <a href="https://www.hesge.ch/heg/formations/bachelors/information-science#apercu-de-la-formation?swiss-lib">https://www.hesge.ch/heg/formations/bachelors/information-science#apercu-de-la-formation?swiss-lib</a>.</p>
+                        <p>En cas de problèmes, vous pouvez nous écrire à l'adresse suivante :  <a href="mailto:info@swisslib.org">info@swisslib.org</a></p>
+                    </div>
+                </div>
+                <!-- Bloc DE -->
+                <div class="card">
+                    <div class="flag">
+                        <img src="https://flagcdn.com/w40/de.png" alt="DE">
+                    </div>
+                    <div class="content">
+                        <p><strong>Um auf die Nachrichten der Plattform zuzugreifen, siehe den Bereich <a href="#title_archive">Archiv</a> !</strong></p>
+                        <p>Die Sss ist verfügbar unter folgendem Link: <a href="https://www.hesge.ch/heg/formations/bachelors/information-science#apercu-de-la-formation?swiss-lib">https://www.hesge.ch/heg/formations/bachelors/information-science#apercu-de-la-formation?swiss-lib</a></p>
+                        <p>Wenn Sie Probleme beim Einloggen haben, kontaktieren Sie den Support : <a href="mailto:info@swisslib.org">info@swisslib.org</a></p>
+                    </div>
+                </div>
+                <!-- Bloc IT -->
+                <div class="card">
+                    <div class="flag">
+                        <img src="https://flagcdn.com/w40/it.png" alt="IT">
+                    </div>
+                    <div class="content">
+                        <p><strong>Per accedere ai messaggi della piattaforma, fare riferimento alla sezione <a href="#title_archive">Archivi</a>!</strong></p>
+                        <p>La documentazione è disponibile qui: <a href="https://www.hesge.ch/heg/formations/bachelors/information-science#apercu-de-la-formation?swiss-lib">https://www.hesge.ch/heg/formations/bachelors/information-science#apercu-de-la-formation?swiss-lib</a></p>
+                        <p>In caso di problemi, contattare il supporto : <a href="mailto:info@swisslib.org">info@swisslib.org</a></p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <h1>Using Swiss-Lib</h1>
+            <p>In order to using the list, you can post a message by sending email to <a href="mailto:swiss-lib@listserv.linguistlist.org" >swiss-lib@listserv.linguistlist.org.</a></p>
+            <p>If you would like to subscribe to the list and receive all messages by email, <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">please find all the information below.</a> </p>
+        
+        <!-- Données PHP des archives -->
+        <div id="archives-container"></div>
+
+<script>
+fetch('http://localhost/swiss-lib/index.php')
+    .then(response => response.json())
+    .then(data => {
+
+        const container = document.getElementById('archives-container');
+
+        container.innerHTML = '';
+
+        const h1 = document.createElement('h1');
+        h1.id = 'title_archive';
+        h1.textContent = 'Archives';
+
+        container.appendChild(h1);
+
+        data.archives.forEach(archive => {
+
+            const h2 = document.createElement('h2');
+            h2.textContent = archive.title;
+
+            container.appendChild(h2);
+
+            const cardsContainer = document.createElement('div');
+            cardsContainer.className = 'cards-container-archives';
+
+            archive.posts.forEach(post => {
+
+                const card = document.createElement('div');
+                card.className = 'card-archives';
+
+                card.dataset.category =
+                    post.title + ' ' + post.author;
+
+                const link = document.createElement('a');
+                link.href =
+                'archives.html?id=' +
+                encodeURIComponent(post.url);
+
+
+                const title = document.createElement('span');
+                title.className = 'title';
+                title.textContent = post.title;
+
+                const author = document.createElement('span');
+                author.className = 'author';
+                author.textContent = post.author;
+
+                link.appendChild(title);
+                link.appendChild(author);
+
+                card.appendChild(link);
+
+                cardsContainer.appendChild(card);
+
+            });
+
+            container.appendChild(cardsContainer);
+
+        });
+
+    })
+    .catch(error => {
+        console.error(error);
+    });
+            
+function filterPosts(filter, button_object) {
+
+    const posts = document.querySelectorAll('.card-archives');
+
+    document.querySelectorAll('.filters button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    button_object.classList.add('active');
+
+    posts.forEach(post => {
+
+        const title = post.dataset.category || '';
+
+        const match =
+            filter === 'all'
+            ? true
+            : filter.test(title);
+
+        post.style.display = match ? '' : 'none';
+
+    });
+}
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const searchInput = document.getElementById('search-category');
+    const cards = document.querySelectorAll('.card-archives');
+
+    searchInput.addEventListener('input', () => {
+
+        const search = searchInput.value.trim().toLowerCase();
+
+        cards.forEach(card => {
+
+            const category = (card.dataset.category || '').toLowerCase();
+
+            if (category.includes(search)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+
+        });
+
+    });
+
+});
+</script>
+
+    <footer class="content_page" style="text-align: center;">
+        <hr>
+        <address><a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">Swiss-Lib</a><p>
+            <table WIDTH="100%" BORDER="0">
+            <tr>
+                <td><a href="http://www.gnu.org/software/mailman/index.html"><img src="/images/mailman/mailman.jpg" alt="Delivered by Mailman" /><br>version 2.1.29</a></td>
+                <td><a href="https://www.hesge.ch/heg/formations/bachelors/information-science#aperu-de-la-formation"><img id="logo_heg" src="images/heg-logo-haute-res-transp.png" alt="Logo HEG" border="0"/></a></td>
+            </tr>
+            </table>
+        </address>
+    </footer>
+    </body>
+</html>
+

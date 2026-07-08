@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!-- saved from url=(0021)https://swisslib.org/ -->
+<html dir="ltr" lang="fr">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Swiss-Lib</title>
+        <link href="css/style.css" rel="stylesheet" />
+        <link rel="icon" type="image/x-icon" href="images/favicon-szinwnhl.png">
+    </head>
+
+    <body class="no-touch">
+        <header>
+            <!-- Logo -->
+            <div id="logo">
+                <img src="images/swiss-lib-logo-couleur.svg" />
+            </div>
+            <h1 class="title">
+                    Bienvenue sur Swiss-Lib / Willkommen Swiss-Lib/ Benvenuti in Swiss-Lib
+            </h1>
+            <div class="container">
+            </div>
+        </header>
+        <main>
+  
+       
+        <!-- Récupération du JSON -->
+         <div id="post-container"></div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+fetch(
+    'http://localhost/swiss-lib/post_archives.php?id=' +
+    encodeURIComponent(params.get('id'))
+)
+.then(response => response.json())
+.then(data => {
+
+    const post = data.post;
+
+    document.getElementById('post-container').innerHTML = `
+        <div class="message-meta">
+            <div>
+                <span class="label">📍 Adresse :</span>
+                ${post.adresse}
+            </div>
+
+            <div>
+                <span class="label">👤 Auteur :</span>
+                ${post.author}
+            </div>
+
+            <div>
+                <span class="label">📅 Date :</span>
+                ${post.date}
+            </div>
+        </div>
+
+        <div class="card-message">
+            ${post.content}
+        </div>
+    `;
+});
+
+</script>
+        </main>
+                        </body>
+                        </html>
+
+                        

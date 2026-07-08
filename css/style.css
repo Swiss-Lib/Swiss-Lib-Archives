@@ -1,0 +1,391 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    /*margin: 20px;*/
+}
+
+#logo {
+    width : 100%;
+    margin-top : 30px;
+    margin-bottom : 30px;
+}
+
+#logo img {
+    width : 30%;
+    display: block;     
+    margin: 0 auto;    
+}
+
+/* TABLEAU */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Titres */
+
+.title {
+    background: #BBC1C8;           
+    color: #5f7895;                
+    text-align: center;
+    font-weight: 500;
+    font-size : 1.5em;
+    padding: 30px 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+
+
+h1 {
+    color: #5f6f86;            /* même couleur */
+    font-weight: 500;
+
+    margin-bottom: 20px;
+
+    position: relative;
+    padding-bottom: 8px;
+
+    font-size: 1.8em;          /* plus grand que h2 */
+}
+
+h2 {
+    color: #5f6f86;            /* gris bleuté discret */
+    font-weight: 500;
+    margin-bottom: 10px;
+    position: relative;
+    padding-bottom: 6px;
+}
+
+/* barre sous le titre */
+h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 60px;               /* longueur de la barre */
+    height: 3px;
+    background: #c3c9d1;       /* couleur douce */
+    border-radius: 2px;
+}
+
+/* HEADER */
+table tr:first-child {
+    background: #1a73e8;
+    color: white;
+    font-weight: bold;
+}
+
+table tr:first-child td {
+    padding: 12px;
+}
+
+/* LIGNES */
+table tr {
+    border-bottom: 1px solid #eee;
+}
+
+table tr:nth-child(even) {
+    background: #f9fbfd;
+}
+
+table td {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+/* LIENS */
+table a {
+    text-decoration: none;
+    color: #1a73e8;
+    font-weight: bold;
+}
+
+table a:hover {
+    text-decoration: underline;
+}
+
+
+/* Blocs d'introduction et img */
+
+.container, main {
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.title {
+    text-align: center;
+    background: #e4ecf6;
+    padding: 20px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.card {
+    display: flex;
+    align-items: flex-start;
+    background: #f6e7a6;
+    color : #685e35;
+    border-radius: 5px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.flag img {
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+}
+
+.content {
+    flex: 1;
+}
+
+.content p {
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Card archives */
+
+.cards-container-archives {
+
+    display: flex;
+    flex-direction: column-reverse;             
+    gap: 8px;
+    margin-bottom: 40px;
+    justify-content: center;      /* centre les cards */
+
+}
+
+.card-archives {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #e4ecf6;
+    border-radius: 14px;
+    padding: 6px 10px;
+    border: 1px solid #c3c9d1;
+    transition: all 0.2s ease;
+
+}
+
+/* texte du lien */
+.card-archives a {
+    display: inline-block; /* C'était display : flex */
+    flex-direction: column;   /* ✅ empile titre + auteur */
+    width : 100%;
+    text-decoration: none;
+    /*width: 100%;*/
+}
+
+/* titre */
+.card-archives .title {
+    color: #3d4d5e;
+    background: transparent;
+    font-weight: 500;
+    font-size: 0.95em;   
+    transition: 0.2s;
+}
+
+/* auteur discret */
+.card-archives .author {
+       margin: 2px 0 0 0;
+    font-size: 0.85em;
+    color: #7a8899;           
+    transition: 0.2s;
+}
+
+/* effet hover */
+
+.card-archives:hover {
+    background-color: #cad9eb;
+}
+
+.cards-container-archives a:hover .title,
+.cards-container-archives a:hover .author {
+    color: white;
+}
+
+/* Boutons des filtres */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.filters button {
+    padding: 10px 18px;
+    border: 1px solid rgba(23, 32, 43, 0.1);
+    border-radius: 999px;
+
+    background: #ffffff;
+    color: #333b44;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    box-shadow: 0 2px 8px rgba(23,32,43,0.04);
+}
+
+.filters button:hover {
+    background: #FFF0D0;
+    border-color: #e7d6ae;
+    transform: translateY(-1px);
+}
+
+.filters button.active {
+    background: #2a5bd7;
+    color: white;
+    border-color: #2a5bd7;
+}
+
+.filters button:active {
+    transform: translateY(0);
+}
+
+/* Class bouton actif */
+
+.filters button.active {
+    background: #0078d4;
+    color: white;
+}
+
+
+
+/* Recherche */
+.search-box {
+    position: relative;
+    max-width: 400px;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 14px 18px 14px 48px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #fff;
+    font-size: 15px;
+    color: #1e293b;
+    transition: all 0.25s ease;
+    outline: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+.search-box input::placeholder {
+    color: #94a3b8;
+}
+
+.search-box input:hover {
+    border-color: #cbd5e1;
+}
+
+.search-box input:focus {
+    border-color: #3b82f6;
+    box-shadow:
+        0 0 0 4px rgba(59,130,246,.12),
+        0 8px 24px rgba(59,130,246,.08);
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    color: #94a3b8;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Card message dans les posts archives */
+.card-message {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px 0;
+    white-space: pre-wrap;
+    
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    line-height: 1.6;
+}
+
+.card-message pre {
+    margin: 0;
+    white-space: pre-wrap; /* conserve les sauts de ligne */
+    word-break: break-word;
+    font-family: inherit; /* utilise la police du site */
+}
+.card-message:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+
+/* Metadata post archive */
+.message-meta {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px;
+    margin: 20px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+.message-meta .row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 10px;
+    padding: 8px 0;
+    align-items: start;
+}
+
+.message-meta .label {
+    font-weight: 600;
+    color: #2563eb;
+    white-space: nowrap;
+}
+
+/* Footer */
+#logo_heg {
+    width : 20%;
+    height: auto;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .card {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+    }
+
+
+    .flag {
+        margin-bottom: 10px;
+    }
+}
+
