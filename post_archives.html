@@ -11,6 +11,7 @@
 
     <body class="no-touch">
         <header>
+            <a id="top"></a>
             <!-- Logo -->
             <div id="logo">
                 <img src="images/swiss-lib-logo-couleur.svg" />
@@ -27,7 +28,9 @@
         </a>
         <!-- Récupération du JSON -->
          <div id="post-container"></div>
-
+        <a href="#top" id="back-to-top" aria-label="Retour en haut de page">
+            ↑
+        </a>
 <script>
 
 const params = new URLSearchParams(window.location.search);
@@ -68,6 +71,19 @@ fetch(
     `;
 });
 
+/* Retour en haut */
+
+const backToTop = document.getElementById('back-to-top');
+
+window.addEventListener('scroll', () => {
+
+    if (window.scrollY > 300) {
+        backToTop.classList.add('show');
+    } else {
+        backToTop.classList.remove('show');
+    }
+
+});
 </script>
         </main>
 
