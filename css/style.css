@@ -1,20 +1,32 @@
+
+* {
+    box-sizing: border-box;
+}
+
+
 body {
     font-family: Arial, sans-serif;
     background: #f5f7fa;
     /*margin: 20px;*/
 }
 
+
 #logo {
-    width : 100%;
-    margin-top : 30px;
-    margin-bottom : 30px;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 #logo img {
-    width : 30%;
-    display: block;     
-    margin: 0 auto;    
+    width: 30%;
+    height: auto;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
+
 
 /* TABLEAU */
 table {
@@ -136,10 +148,30 @@ table a:hover {
     gap: 20px;
 }
 
+.content {
+    flex: 1;
+    min-width: 0;
+}
+
+
+.content {
+    min-width: 0;
+}
+
+.content p {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+
 .flag img {
     width: 40px;
     height: 40px;
     border-radius: 3px;
+}
+
+.flag {
+    flex-shrink: 0;
 }
 
 .content {
@@ -326,6 +358,11 @@ a:hover {
     box-shadow: 0 2px 10px rgba(0,0,0,0.04);
 }
 
+.search-box input {
+    box-sizing: border-box;
+}
+
+
 .search-box input::placeholder {
     color: #94a3b8;
 }
@@ -452,10 +489,7 @@ a:hover {
     font-size: 0.8rem;
 }
 
-#logo_heg {
-    width : 20%;
-    height: auto;
-}
+
 
 /*Flèche pour remonter*/
 
@@ -526,15 +560,16 @@ a:hover {
 
 /* Responsive */
 @media (max-width: 600px) {
+
     .card {
-        flex-direction: column-reverse;
+        flex-direction: row;
         align-items: flex-start;
     }
 
-
     .flag {
-        margin-bottom: 10px;
+        margin-bottom: 0;
     }
+
 
     .footer-links {
         flex-direction: column;
@@ -545,5 +580,22 @@ a:hover {
     .footer-contact {
         text-align: center;
     }
+
+
+    #logo img {
+        width: 60%;
+    }
+
+    
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filters button {
+        width: 100%;
+    }
+
+
 }
 

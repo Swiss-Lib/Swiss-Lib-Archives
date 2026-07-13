@@ -34,15 +34,14 @@ const params = new URLSearchParams(window.location.search);
 
 const id = new URLSearchParams(location.search)
     .get('id');
-
+console.log(id)
 fetch(
-    'http://localhost/swiss-lib/post_archives.php?id=' + id
+    'https://archive-swisslib.deepmining.ch/post_archives.php?id=' + id
 )
 .then(response => response.json())
 .then(data => {
 
     const post = data.post;
-
     document.getElementById('post-container').innerHTML = `
         <div class="message-meta">
             <div>

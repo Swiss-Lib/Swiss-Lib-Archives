@@ -46,7 +46,7 @@ const FILTERS = {
                     </div>
                     <div class="content">
                         <p><strong>Pour accéder aux messages de la plateforme, référez-vous à la section <a href="#title_archive">Archives</a> !</strong></p>
-                        <p>La documentation HEG est disponible en suivant ce lien : <a href="https://www.hesge.ch/heg/formations/bachelors/information-science#apercu-de-la-formation?swiss-lib">https://www.hesge.ch/heg/formations/bachelors/information-science#apercu-de-la-formation?swiss-lib</a>.</p>
+                        <p>Pour vous abonner ou poster un message sur la liste, référez-vous à la <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">page d'information de Swiss-Lib</a>.</p>
                         <p>En cas de problèmes, vous pouvez nous écrire à l'adresse suivante :  <a href="mailto:info@swisslib.org">info@swisslib.org</a></p>
                     </div>
                 </div>
@@ -57,7 +57,7 @@ const FILTERS = {
                     </div>
                     <div class="content">
                         <p><strong>Um auf die Nachrichten der Plattform zuzugreifen, siehe den Bereich <a href="#title_archive">Archiv</a> !</strong></p>
-                        <p>Die Sss ist verfügbar unter folgendem Link: <a href="https://www.hesge.ch/heg/formations/bachelors/information-science#apercu-de-la-formation?swiss-lib">https://www.hesge.ch/heg/formations/bachelors/information-science#apercu-de-la-formation?swiss-lib</a></p>
+                        <p>Um die Liste zu abonnieren oder eine Nachricht zu veröffentlichen, lesen Sie bitte die folgenden Hinweise: <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">page d'information de Swiss-Lib</a>.</p>
                         <p>Wenn Sie Probleme beim Einloggen haben, kontaktieren Sie den Support : <a href="mailto:info@swisslib.org">info@swisslib.org</a></p>
                     </div>
                 </div>
@@ -68,43 +68,43 @@ const FILTERS = {
                     </div>
                     <div class="content">
                         <p><strong>Per accedere ai messaggi della piattaforma, fare riferimento alla sezione <a href="#title_archive">Archivi</a>!</strong></p>
-                        <p>La documentazione è disponibile qui: <a href="https://www.hesge.ch/heg/formations/bachelors/information-science#apercu-de-la-formation?swiss-lib">https://www.hesge.ch/heg/formations/bachelors/information-science#apercu-de-la-formation?swiss-lib</a></p>
+                        <p>Per iscriverti o pubblicare un messaggio sulla lista, fai riferimento a : <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">page d'information de Swiss-Lib</a>.</p>
                         <p>In caso di problemi, contattare il supporto : <a href="mailto:info@swisslib.org">info@swisslib.org</a></p>
                     </div>
                 </div>
             </div>
         </header>
         <main>
-            <h1>Using Swiss-Lib</h1>
-            <p>In order to using the list, you can post a message by sending email to <a href="mailto:swiss-lib@listserv.linguistlist.org" >swiss-lib@listserv.linguistlist.org.</a></p>
-            <p>If you would like to subscribe to the list and receive all messages by email, <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">please find all the information below.</a> </p>
-        
+            <h1 id="title_archive">Archives</h1>
+            <p>To refine your search, you can use the filter buttons or the search function below.</p>
+            <p>If nothing appears, you can consult <a href="https://listserv.linguistlist.org/pipermail/swiss-lib/">the original archives.</a></p>
+
             <!-- Filtre -->
             <div class="filters">
-                <button onclick="filterPosts('all', this)">Tous</button>
+                <button class="active" onclick="filterPosts('all', this)">Tous / Alle / Tutto </button>
 
                 <button onclick="filterPosts(FILTERS.emploi, this)">
-                    Emploi
+                    Emploi / Arbeit / Lavoro
                 </button>
 
                 <button onclick="filterPosts(FILTERS.evenements, this)">
-                    Événements
+                    Événements / Veranstaltungen / Eventi
                 </button>
 
                 <button onclick="filterPosts(FILTERS.communaute, this)">
-                    Communauté
+                    Communauté / Gemeinschaft / Comunita
                 </button>
 
                 <button onclick="filterPosts(FILTERS.formations, this)">
-                    Formations
+                    Formations / Weiterbildung / Formazione
                 </button>
 
                 <button onclick="filterPosts(FILTERS.ressources, this)">
-                    Ressources
+                    Ressources / Ressourcen / Risorse
                 </button>
 
                 <button onclick="filterPosts(FILTERS.recherches, this)">
-                    Recherches et contributions
+                    Recherches / Forschung/ Ricerche
                 </button>
 
                 <button onclick="filterPosts(FILTERS.newsletter, this)">
@@ -144,22 +144,34 @@ const FILTERS = {
 </a>
 <script>
 //Variables
-const API_URL = 'http://localhost/swiss-lib/index.php';
+const API_URL = 'https://archive-swisslib.deepmining.ch/index.php';
 let visiblePosts = 20; //posts visible par défaut
 const postsPerPage = 20; //posts par affichage
 let archivesData = null; //valeur par défaut des archives
+let currentData = null;       // données actuellement affichées
 
 //Afficher les archives
 function renderArchives(data) {
+    const isSearching =
+        document.getElementById('search-category')
+            ?.value
+            ?.trim() !== '';
+        currentData = data;
 
-    archivesData = data;
+    
+    const isFiltered =
+        document.querySelector('.filters button.active') &&
+        !document.querySelector('.filters button.active')
+            .textContent
+            .includes('Tous');
+
 
     const container = document.getElementById('archives-container');
 
-    let html = `
-        <h1 id="title_archive">Archives</h1>
-    `;
-
+   // let html = `
+     //   <h1 id="title_archive">Archives</h1>
+   // `;
+    let html = ``;
     let displayedPosts = 0;
 
     data.archives.forEach(archive => {
@@ -169,9 +181,11 @@ function renderArchives(data) {
 
         archive.posts.forEach(post => {
 
-            if (displayedPosts >= visiblePosts) {
+            //On fuit si ces conditions sont satisfaites
+            if (!isSearching && !isFiltered && displayedPosts >= visiblePosts) {
                 return;
             }
+
 
             archiveHasPosts = true;
             displayedPosts++;
@@ -191,10 +205,11 @@ function renderArchives(data) {
             `;
         });
 
-        if (archiveHasPosts) {
+ if (archiveHasPosts) {
 
             html += `
                 <h2>${archive.title}</h2>
+
                 <div class="cards-container-archives">
                     ${archiveHtml}
                 </div>
@@ -205,8 +220,23 @@ function renderArchives(data) {
 
     container.innerHTML = html;
 
-    updateLoadMoreButton();
+    const loadMoreBtn =
+        document.getElementById('load-more-btn');
+
+    if (loadMoreBtn) {
+
+        if (isSearching) {
+
+            loadMoreBtn.style.display = 'none';
+
+        } else {
+
+            updateLoadMoreButton();
+        }
+
+    }
 }
+
 
 //
 // 1 - Affichage instantané du cache navigateur
@@ -217,7 +247,10 @@ const cachedData = localStorage.getItem('archivesCache');
 if (cachedData) {
 
     try {
-        renderArchives(JSON.parse(cachedData));
+
+        archivesData = JSON.parse(cachedData);
+        renderArchives(archivesData);
+
     } catch(e) {
         console.error(e);
     }
@@ -241,8 +274,9 @@ fetch(API_URL)
                 'archivesCache',
                 newCache
             );
+        archivesData = data;
+        renderArchives(data);
 
-            renderArchives(data);
         }
 
     })
@@ -256,49 +290,85 @@ fetch(API_URL)
 
 function filterPosts(filter, button_object) {
 
-    const posts = document.querySelectorAll('.card-archives');
-
     document.querySelectorAll('.filters button').forEach(btn => {
         btn.classList.remove('active');
     });
 
     button_object.classList.add('active');
 
-    posts.forEach(post => {
+    const loadMoreBtn =
+        document.getElementById('load-more-btn');
 
-        const title = post.dataset.category || '';
+    // Filtre Tous
+    if (filter === 'all') {
 
-        const match =
-            filter === 'all'
-                ? true
-                : filter.test(title);
+        visiblePosts = postsPerPage;
 
-        post.style.display = match ? '' : 'none';
+        renderArchives(archivesData);
 
-    });
+        if (loadMoreBtn) {
+            updateLoadMoreButton();
+        }
+
+        return;
+    }
+
+    const filteredData = {
+
+        success: true,
+
+        archives: archivesData.archives
+            .map(archive => ({
+
+                ...archive,
+
+                posts: archive.posts.filter(post => {
+
+                    const searchableText = (
+                        post.title +
+                        ' ' +
+                        post.author
+                    );
+
+                    return filter.test(searchableText);
+
+                })
+
+            }))
+            .filter(archive => archive.posts.length > 0)
+
+    };
+
+    renderArchives(filteredData);
+
+    // Masquer "Voir plus"
+    if (loadMoreBtn) {
+        loadMoreBtn.style.display = 'none';
+    }
 }
-
 //
 // Mise à jour des posts visibles
 //
 
 function updateLoadMoreButton() {
 
+    const button =
+        document.getElementById('load-more-btn');
+
+    if (!button || !archivesData) {
+        return;
+    }
+
     const totalPosts = archivesData.archives.reduce(
-        (sum, archive) => sum + archive.posts.length,
+        (total, archive) =>
+            total + archive.posts.length,
         0
     );
 
-    const button = document.getElementById('load-more-btn');
-
-    if (visiblePosts >= totalPosts) {
-
-        button.style.display = 'none';
-
-    } else {
-
-        button.style.display = '';
-    }
+    button.style.display =
+        visiblePosts >= totalPosts
+            ? 'none'
+            : '';
 }
 
 document
@@ -320,27 +390,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!searchInput) return;
 
-    searchInput.addEventListener('input', () => {
+   searchInput.addEventListener('input', () => {
 
-        const search = searchInput.value
-            .trim()
-            .toLowerCase();
+    const search = searchInput.value
+        .trim()
+        .toLowerCase();
 
-        document
-            .querySelectorAll('.card-archives')
-            .forEach(card => {
+    if (search === '') {
 
-                const category =
-                    (card.dataset.category || '')
-                    .toLowerCase();
+        visiblePosts = postsPerPage;
 
-                card.style.display =
-                    category.includes(search)
-                        ? ''
-                        : 'none';
-            });
+        renderArchives(archivesData);
 
-    });
+        return;
+    }
+
+    const filteredData = {
+
+        success: true,
+
+        archives: archivesData.archives
+            .map(archive => ({
+
+                ...archive,
+
+                posts: archive.posts.filter(post => {
+
+                    const searchableText = (
+                        post.title +
+                        ' ' +
+                        post.author
+                    ).toLowerCase();
+
+                    return searchableText.includes(search);
+
+                })
+
+            }))
+            .filter(archive => archive.posts.length > 0)
+
+    };
+
+    renderArchives(filteredData);
+
+});
 
 });
 
