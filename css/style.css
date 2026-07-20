@@ -610,9 +610,16 @@ a:hover {
     text-decoration: underline;
 }
 
-.hidden-part summary::marker {
-    color: #adb5bd;          /* couleur de la flèche native */
+
+
+.hidden-part summary::before {
+    content: "▶ ";
 }
+
+.hidden-part[open] summary::before {
+    content: "▼ ";
+}
+
 /* Chargement Loading */
 
 .loading {
