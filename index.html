@@ -80,24 +80,7 @@ const FILTERS = {
             <p>If nothing appears, you can consult <a href="https://listserv.linguistlist.org/pipermail/swiss-lib/">the original archives.</a></p>
 
             <div id="search-panel">
-                <!-- Recherche -->
-                <div class="search-box">
-                    <svg class="search-icon" viewBox="0 0 24 24" fill="none">
-                        <path
-                            d="M21 21L15.8 15.8M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                        />
-                    </svg>
 
-                    <input
-                        type="search"
-                        id="search-category"
-                        placeholder="Rechercher un message ou une catégorie..."
-                        autocomplete="off"
-                    />
-                </div>
                 <!-- Filtres -->
                 <div class="filters">
                     <button class="active" onclick="filterPosts('all', this)">Tous / Alle / Tutto </button>
@@ -129,6 +112,25 @@ const FILTERS = {
                     <button onclick="filterPosts(FILTERS.newsletter, this)">
                         Newsletter
                     </button>
+                </div>
+
+                                <!-- Recherche -->
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M21 21L15.8 15.8M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+
+                    <input
+                        type="search"
+                        id="search-category"
+                        placeholder="Rechercher un message ou une catégorie..."
+                        autocomplete="off"
+                    />
                 </div>
             </div>
         <!-- Données PHP des archives -->
