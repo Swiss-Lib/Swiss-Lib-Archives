@@ -17,7 +17,7 @@
                 <img src="images/swiss-lib-logo-couleur.svg" />
             </div>
             <h1 class="title">
-                    Bienvenue sur Swiss-Lib / Willkommen Swiss-Lib/ Benvenuti in Swiss-Lib
+                    Bienvenue sur Swiss-Lib / Willkommen Swiss-Lib / Benvenuti in Swiss-Lib
             </h1>
             <div class="container">
             </div>
@@ -49,16 +49,31 @@ fetch(
 .then(data => {
 
     const post = data.post;
+    let email = post.author.replace(/\s+at\s+/i, '@').replace(/<[^>]*>/g, '').trim();
+
+    
+    let content = post.content;
+
+        // Masquer tout ce qui suit "-------------- next part --------------"
+        content = content.replace(
+            /(-------------- next part --------------[\s\S]*)$/i,
+            `<details class="hidden-part">
+                <summary>Afficher le contenu supplémentaire</summary>
+                $1
+            </details>`
+        );
+
+
     document.getElementById('post-container').innerHTML = `
         <div class="message-meta">
             <div>
                 <span class="label">📍 Adresse :</span>
-                ${post.adresse}
+                ${email}
             </div>
-
+                
             <div>
                 <span class="label">👤 Auteur :</span>
-                ${post.author}
+                ${post.adresse}
             </div>
 
             <div>
@@ -68,7 +83,7 @@ fetch(
         </div>
 
         <div class="card-message">
-            ${post.content}
+            ${content}
         </div>
     `;
 });
