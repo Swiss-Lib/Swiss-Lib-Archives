@@ -557,6 +557,25 @@ a:hover {
     background: #1d4ed8;
 }
 
+/* Post-archives */
+/* Contenu supplémentaire */
+.hidden-part summary {
+    color: #6c757d;          /* gris discret */
+    font-style: italic;
+    cursor: pointer;
+    display: inline-block;
+    transition: color 0.2s ease;
+}
+
+.hidden-part summary:hover {
+    color: #495057;          /* légèrement plus foncé */
+    text-decoration: underline;
+}
+
+.hidden-part summary::marker {
+    color: #adb5bd;          /* couleur de la flèche native */
+}
+
 
 /* Responsive */
 @media (max-width: 600px) {

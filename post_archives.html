@@ -58,24 +58,22 @@ fetch(
         content = content.replace(
             /(-------------- next part --------------[\s\S]*)$/i,
             `<details class="hidden-part">
-                <summary>Afficher le contenu supplémentaire</summary>
+                <summary>Show additional content...</summary>
                 $1
             </details>`
         );
 
 
     document.getElementById('post-container').innerHTML = `
-        <div class="message-meta">
-            <div>
-                <span class="label">📍 Adresse :</span>
-                ${email}
-            </div>
-                
+        <div class="message-meta">         
             <div>
                 <span class="label">👤 Auteur :</span>
                 ${post.adresse}
             </div>
-
+            <div>
+                <span class="label">📧 E-mail :</span>
+                <a href="mailto:${email}">${email}</a>
+            </div>
             <div>
                 <span class="label">📅 Date :</span>
                 ${post.date}
