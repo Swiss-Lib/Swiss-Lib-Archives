@@ -52,16 +52,24 @@ table {
     line-height: 1.4;
 }
 
+#title_archive::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 60px;               /* longueur de la barre */
+    height: 3px;
+    background: #c3c9d1;       /* couleur douce */
+    border-radius: 2px;
+}
+
 
 h1 {
     color: #5f6f86;            /* même couleur */
     font-weight: 500;
-
     margin-bottom: 20px;
-
     position: relative;
     padding-bottom: 8px;
-
     font-size: 1.8em;          /* plus grand que h2 */
 }
 
@@ -71,6 +79,7 @@ h2 {
     margin-bottom: 10px;
     position: relative;
     padding-bottom: 6px;
+    font-size: 1.2em;
 }
 
 /* barre sous le titre */
@@ -219,7 +228,7 @@ a:hover {
 
 /* texte du lien */
 .card-archives a {
-    display: inline-block; /* C'était display : flex */
+    display: block; /* C'était display : flex */
     flex-direction: column;   /* ✅ empile titre + auteur */
     width : 100%;
     text-decoration: none;
@@ -237,11 +246,17 @@ a:hover {
 
 /* auteur discret */
 .card-archives .author {
-       margin: 2px 0 0 0;
+    display: inline-block;
+    margin: 2px 0 0 0;
+    padding-left : 20px;
     font-size: 0.85em;
     color: #7a8899;           
     transition: 0.2s;
 }
+
+
+
+
 
 /* effet hover */
 
@@ -287,12 +302,32 @@ a:hover {
     border-color: #2a5bd7;
 }
 
+/* Search panel and filters */
+
+#search-panel {
+    background: rgba(255, 255, 255, 0.726);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    text-align: center;
+    
+    max-width: 900px;
+    margin: 0 auto;
+
+}
+
+
 /* Boutons des filtres */
 .filters {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     margin: 20px 0;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 18px;
+    font-size: 0.95rem;
+
 }
 
 .filters button {
@@ -340,9 +375,10 @@ a:hover {
 /* Recherche */
 .search-box {
     position: relative;
-    max-width: 400px;
+    max-width: 100%;
     width: 100%;
-    margin: 20px 0;
+    margin: 20px auto;
+
 }
 
 .search-box input {
@@ -557,6 +593,8 @@ a:hover {
     background: #1d4ed8;
 }
 
+
+
 /* Post-archives */
 /* Contenu supplémentaire */
 .hidden-part summary {
@@ -602,7 +640,7 @@ a:hover {
 
 
     #logo img {
-        width: 60%;
+        min-width: 300px;
     }
 
     

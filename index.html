@@ -57,7 +57,7 @@ const FILTERS = {
                     </div>
                     <div class="content">
                         <p><strong>Um auf die Nachrichten der Plattform zuzugreifen, siehe den Bereich <a href="#title_archive">Archiv</a> !</strong></p>
-                        <p>Um die Liste zu abonnieren oder eine Nachricht zu veröffentlichen, lesen Sie bitte die folgenden Hinweise: <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">page d'information de Swiss-Lib</a>.</p>
+                        <p>Um die Liste zu abonnieren oder eine Nachricht zu veröffentlichen, lesen Sie bitte die folgenden Hinweise: <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">Informationsseite von Swiss-Lib</a>.</p>
                         <p>Wenn Sie Probleme beim Einloggen haben, kontaktieren Sie den Support : <a href="mailto:info@swisslib.org">info@swisslib.org</a></p>
                     </div>
                 </div>
@@ -68,7 +68,7 @@ const FILTERS = {
                     </div>
                     <div class="content">
                         <p><strong>Per accedere ai messaggi della piattaforma, fare riferimento alla sezione <a href="#title_archive">Archivi</a>!</strong></p>
-                        <p>Per iscriverti o pubblicare un messaggio sulla lista, fai riferimento a : <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">page d'information de Swiss-Lib</a>.</p>
+                        <p>Per iscriverti o pubblicare un messaggio sulla lista, fai riferimento a : <a href="https://listserv.linguistlist.org/cgi-bin/mailman/listinfo/swiss-lib">pagina informativa di Swiss-Lib</a>.</p>
                         <p>In caso di problemi, contattare il supporto : <a href="mailto:info@swisslib.org">info@swisslib.org</a></p>
                     </div>
                 </div>
@@ -79,56 +79,58 @@ const FILTERS = {
             <p>To refine your search, you can use the filter buttons or the search function below.</p>
             <p>If nothing appears, you can consult <a href="https://listserv.linguistlist.org/pipermail/swiss-lib/">the original archives.</a></p>
 
-            <!-- Filtre -->
-            <div class="filters">
-                <button class="active" onclick="filterPosts('all', this)">Tous / Alle / Tutto </button>
+            <div id="search-panel">
+                <!-- Recherche -->
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M21 21L15.8 15.8M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+                    </svg>
 
-                <button onclick="filterPosts(FILTERS.emploi, this)">
-                    Emploi / Arbeit / Lavoro
-                </button>
+                    <input
+                        type="search"
+                        id="search-category"
+                        placeholder="Rechercher un message ou une catégorie..."
+                        autocomplete="off"
+                    />
+                </div>
+                <!-- Filtres -->
+                <div class="filters">
+                    <button class="active" onclick="filterPosts('all', this)">Tous / Alle / Tutto </button>
 
-                <button onclick="filterPosts(FILTERS.evenements, this)">
-                    Événements / Veranstaltungen / Eventi
-                </button>
+                    <button onclick="filterPosts(FILTERS.emploi, this)">
+                        Emploi / Arbeit / Lavoro
+                    </button>
 
-                <button onclick="filterPosts(FILTERS.communaute, this)">
-                    Communauté / Gemeinschaft / Comunita
-                </button>
+                    <button onclick="filterPosts(FILTERS.evenements, this)">
+                        Événements / Veranstaltungen / Eventi
+                    </button>
 
-                <button onclick="filterPosts(FILTERS.formations, this)">
-                    Formations / Weiterbildung / Formazione
-                </button>
+                    <button onclick="filterPosts(FILTERS.communaute, this)">
+                        Communauté / Gemeinschaft / Comunita
+                    </button>
 
-                <button onclick="filterPosts(FILTERS.ressources, this)">
-                    Ressources / Ressourcen / Risorse
-                </button>
+                    <button onclick="filterPosts(FILTERS.formations, this)">
+                        Formations / Weiterbildung / Formazione
+                    </button>
 
-                <button onclick="filterPosts(FILTERS.recherches, this)">
-                    Recherches / Forschung / Ricerche
-                </button>
+                    <button onclick="filterPosts(FILTERS.ressources, this)">
+                        Ressources / Ressourcen / Risorse
+                    </button>
 
-                <button onclick="filterPosts(FILTERS.newsletter, this)">
-                    Newsletter
-                </button>
+                    <button onclick="filterPosts(FILTERS.recherches, this)">
+                        Recherches / Forschung / Ricerche
+                    </button>
+
+                    <button onclick="filterPosts(FILTERS.newsletter, this)">
+                        Newsletter
+                    </button>
+                </div>
             </div>
-            <!-- Recherche -->
-        <div class="search-box">
-            <svg class="search-icon" viewBox="0 0 24 24" fill="none">
-                <path
-                    d="M21 21L15.8 15.8M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                />
-            </svg>
-
-            <input
-                type="search"
-                id="search-category"
-                placeholder="Rechercher un message ou une catégorie..."
-                autocomplete="off"
-            />
-        </div>
         <!-- Données PHP des archives -->
         <div id="archives-container">
                 <p>Loading...</p>
