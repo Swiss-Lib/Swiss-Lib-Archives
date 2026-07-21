@@ -50,7 +50,6 @@ fetch(
 )
 .then(response => response.json())
 .then(data => {
-
     const post = data.post;
     let email = post.author.replace(/\s+at\s+/i, '@').replace(/<[^>]*>/g, '').trim();
 
@@ -83,6 +82,7 @@ fetch(
             content = addTargetBlank(content);
 
     document.getElementById('post-container').innerHTML = `
+        <h1 id="titre_post">${post.title}</h1>
         <div class="message-meta">         
             <div>
                 <span class="label">👤 Auteur :</span>

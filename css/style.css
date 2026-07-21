@@ -75,6 +75,21 @@ h1 {
     font-size: 1.8em;          /* plus grand que h2 */
 }
 
+#titre_post {
+    font-size: 1.5em;
+}
+
+#titre_post::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 60px;               /* longueur de la barre */
+    height: 3px;
+    background: #c3c9d1;       /* couleur douce */
+    border-radius: 2px;
+}
+
 h2 {
     color: #5f6f86;            /* gris bleuté discret */
     font-weight: 500;
