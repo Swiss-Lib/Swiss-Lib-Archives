@@ -64,19 +64,14 @@ table {
     background: #c3c9d1;       /* couleur douce */
     border-radius: 2px;
 }
-
-
-h1 {
+/* Titre pour les posts */
+#titre_post {
     color: #5f6f86;            /* même couleur */
     font-weight: 500;
     margin-bottom: 20px;
     position: relative;
     padding-bottom: 8px;
-    font-size: 1.8em;          /* plus grand que h2 */
-}
-
-#titre_post {
-  font-size: clamp(1.2rem, 4vw, 2rem);
+    font-size: 1.5em;          /* plus grand que h2 */
 }
 
 #titre_post::after {
@@ -89,6 +84,17 @@ h1 {
     background: #c3c9d1;       /* couleur douce */
     border-radius: 2px;
 }
+
+h1 {
+    color: #5f6f86;            /* même couleur */
+    font-weight: 500;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 8px;
+    font-size: 1.8em;          /* plus grand que h2 */
+}
+
+
 
 h2 {
     color: #5f6f86;            /* gris bleuté discret */

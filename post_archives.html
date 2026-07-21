@@ -80,9 +80,10 @@ fetch(
             content = fixMailtoLinks(content);
         //Ajout target blank
             content = addTargetBlank(content);
-
+    //Traitement du titre pour enlever la première balise
+    let title_post = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
     document.getElementById('post-container').innerHTML = `
-        <h1 id="titre_post">${post.title}</h1>
+        <h1 id="titre_post">${title_post}</h1>
         <div class="message-meta">         
             <div>
                 <span class="label">👤 Auteur :</span>
