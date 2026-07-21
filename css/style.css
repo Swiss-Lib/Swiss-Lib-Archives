@@ -76,7 +76,7 @@ h1 {
 }
 
 #titre_post {
-    font-size: 1.5em;
+  font-size: clamp(1.2rem, 4vw, 2rem);
 }
 
 #titre_post::after {
