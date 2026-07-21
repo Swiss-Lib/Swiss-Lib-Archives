@@ -83,7 +83,7 @@ const FILTERS = {
 
                 <!-- Filtres -->
                 <div class="filters">
-                    <button class="active" onclick="filterPosts('all', this)">Tous / Alle / Tutto </button>
+                    <button class="active" onclick="filterPosts('all', this)">Tous / Alle / Tutto</button>
 
                     <button onclick="filterPosts(FILTERS.emploi, this)">
                         Emploi / Arbeit / Lavoro
@@ -113,6 +113,22 @@ const FILTERS = {
                         Newsletter
                     </button>
                 </div>
+
+                <!-- Mobile -->
+                 
+                <div class="mobile-select">
+                    <select onchange="handleFilterChange(this)">
+                        <option class="active" value="all">Tous / Alle / Tutto</option>
+                        <option value="emploi">Emploi / Arbeit / Lavoro</option>
+                        <option value="evenements">Événements / Veranstaltungen / Eventi</option>
+                        <option value="communaute">Communauté / Gemeinschaft / Comunita</option>
+                        <option value="formations"">Formations / Weiterbildung / Formazione</option>
+                        <option value="ressources"">Ressources / Ressourcen / Risorse</option>
+                        <option value="recherches">Recherches / Forschung / Ricerche</option>
+                        <option value="newsletter">Newsletter</option>
+                    </select>
+                </div>
+
 
                                 <!-- Recherche -->
                 <div class="search-box">
@@ -458,6 +474,27 @@ window.addEventListener('scroll', () => {
     }
 
 });
+
+/* Mobile Select */
+
+function handleFilterChange(select) {
+    const filtersMap = {
+        emploi: FILTERS.emploi,
+        evenements: FILTERS.evenements,
+        communaute: FILTERS.communaute,
+        formations: FILTERS.formations,
+        ressources: FILTERS.ressources,
+        recherches: FILTERS.recherches,
+        newsletter: FILTERS.newsletter
+    };
+
+    const filter = select.value === 'all'
+        ? 'all'
+        : filtersMap[select.value];
+
+    filterPosts(filter, select);
+}
+
 
 </script>
 
