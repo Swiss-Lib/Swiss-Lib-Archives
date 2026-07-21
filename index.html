@@ -17,7 +17,7 @@ const FILTERS = {
 
         evenements: /(evenement|event|symposium|veranstaltung|jahrestagung|evento|conference|kongress|convegno|colloque|journee|tagung|giornata|webinaire|webinar|salon|messe|fiera)/i,
 
-        communaute: /(communaute|communautes|community|gemeinschaft|comunita|annonce|ankündigung|annuncio|information|actualite|neuigkeit|notizia|news)/i,
+        communaute: /\b(communaute|community|annonce|information|actualite|neuigkeit|notizia|news)\b/i,
 
         formations: /(formation\s+continue|formation|formations|continuing\s+professional\s+development|weiterbildung|weiterbildungskurs|formazione\s+continua|competences|competencies|skills|kompetenzen|competenze)/i,
 
@@ -217,10 +217,12 @@ function renderArchives(data) {
                 'post_archives.html?id=' +
                 encodeURIComponent(post.url);
             let title_post = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
+            let category = getCategory(title_post);
             archiveHtml += `
                 <div class="card-archives"
                      data-category="${title_post} ${post.author}">
                     <a href="${url}">
+                        <span class="badge ${category}"></span>
                         <span class="title">${title_post}</span>
                         <span class="author">${post.author}</span>
                     </a>
@@ -348,9 +350,7 @@ function filterPosts(filter, button_object) {
                 posts: archive.posts.filter(post => {
 
                     const searchableText = (
-                        post.title +
-                        ' ' +
-                        post.author
+                        post.title
                     );
 
                     return filter.test(searchableText);
@@ -494,6 +494,22 @@ function handleFilterChange(select) {
 
     filterPosts(filter, select);
 }
+
+// Déterminer les cartes
+
+
+function getCategory(title = "") {
+    if (FILTERS.newsletter.test(title)) return "newsletter";
+    if (FILTERS.emploi.test(title)) return "emploi";
+    if (FILTERS.evenements.test(title)) return "evenements";
+    if (FILTERS.formations.test(title)) return "formations";
+    if (FILTERS.ressources.test(title)) return "ressources";
+    if (FILTERS.recherches.test(title)) return "recherches";
+    if (FILTERS.communaute.test(title)) return "communaute";
+
+    return "autre";
+}
+
 
 
 </script>
