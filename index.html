@@ -216,12 +216,12 @@ function renderArchives(data) {
             const url =
                 'post_archives.html?id=' +
                 encodeURIComponent(post.url);
-
+            let title_post = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
             archiveHtml += `
                 <div class="card-archives"
-                     data-category="${post.title} ${post.author}">
+                     data-category="${title_post} ${post.author}">
                     <a href="${url}">
-                        <span class="title">${post.title}</span>
+                        <span class="title">${title_post}</span>
                         <span class="author">${post.author}</span>
                     </a>
                 </div>
