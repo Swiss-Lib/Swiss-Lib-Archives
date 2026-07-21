@@ -366,7 +366,7 @@ a:hover {
 
 
 .mobile-select select {
-    background-color: #f8fafc;
+    background-color: #fcfcfc;
     color: #334155;
 }
 
@@ -743,11 +743,11 @@ a:hover {
     }
 
     .mobile-select {
-        display : block;
+        display : block !important;
     }
 
     .filters {
-        display : none;
+        display : none !important;
     }
 
 
