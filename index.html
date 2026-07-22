@@ -17,7 +17,7 @@ const FILTERS = {
 
         evenements: /(evenement|event|symposium|veranstaltung|jahrestagung|evento|conference|kongress|convegno|colloque|journee|tagung|giornata|webinaire|webinar|salon|messe|fiera)/i,
 
-        communaute: /\b(communaute|community|annonce|information|actualite|neuigkeit|notizia|news)\b/i,
+        communaute: /\b(communaute|communautes|community|gemeinschaft|comunita|annonce|ankündigung|annuncio|information|actualite|neuigkeit|notizia|news)\b/i,
 
         formations: /(formation\s+continue|formation|formations|continuing\s+professional\s+development|weiterbildung|weiterbildungskurs|formazione\s+continua|competences|competencies|skills|kompetenzen|competenze)/i,
 
@@ -85,31 +85,31 @@ const FILTERS = {
                 <div class="filters">
                     <button class="active" onclick="filterPosts('all', this)">Tous / Alle / Tutto</button>
 
-                    <button onclick="filterPosts(FILTERS.emploi, this)">
+                    <button onclick="filterPosts('emploi', this)">
                         Emploi / Arbeit / Lavoro
                     </button>
 
-                    <button onclick="filterPosts(FILTERS.evenements, this)">
+                    <button onclick="filterPosts('evenements', this)">
                         Événements / Veranstaltungen / Eventi
                     </button>
 
-                    <button onclick="filterPosts(FILTERS.communaute, this)">
+                    <button onclick="filterPosts('communaute', this)">
                         Communauté / Gemeinschaft / Comunita
                     </button>
 
-                    <button onclick="filterPosts(FILTERS.formations, this)">
+                    <button onclick="filterPosts('formations', this)">
                         Formations / Weiterbildung / Formazione
                     </button>
 
-                    <button onclick="filterPosts(FILTERS.ressources, this)">
+                    <button onclick="filterPosts('ressources', this)">
                         Ressources / Ressourcen / Risorse
                     </button>
 
-                    <button onclick="filterPosts(FILTERS.recherches, this)">
+                    <button onclick="filterPosts('recherches', this)">
                         Recherches / Forschung / Ricerche
                     </button>
 
-                    <button onclick="filterPosts(FILTERS.newsletter, this)">
+                    <button onclick="filterPosts('newsletter', this)">
                         Newsletter
                     </button>
                 </div>
@@ -117,7 +117,7 @@ const FILTERS = {
                 <!-- Mobile -->
                  
                 <div class="mobile-select">
-                    <select id="filters_select" onchange="handleFilterChange(this)">
+                    <select id="filters_select" onchange="filterPosts(this.value, this)">
                         <option class="active" value="all">Tous / Alle / Tutto</option>
                         <option value="emploi">Emploi / Arbeit / Lavoro</option>
                         <option value="evenements">Événements / Veranstaltungen / Eventi</option>
@@ -217,12 +217,12 @@ function renderArchives(data) {
                 'post_archives.html?id=' +
                 encodeURIComponent(post.url);
             let title_post = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
-            let category = getCategory(title_post);
+
             archiveHtml += `
                 <div class="card-archives"
-                     data-category="${title_post} ${post.author}">
+                     data-category="${post.category}">
                     <a href="${url}">
-                        <span class="badge ${category}"></span>
+                        <span class="badge ${post.category}"></span>
                         <span class="title">${title_post}</span>
                         <span class="author">${post.author}</span>
                     </a>
@@ -274,6 +274,13 @@ if (cachedData) {
     try {
 
         archivesData = JSON.parse(cachedData);
+        //Catégories à déterminer
+        archivesData.archives.forEach(archive => {
+            archive.posts.forEach(post => {
+                post.category = getCategory(post.title);
+            });
+        });
+
         renderArchives(archivesData);
 
     } catch(e) {
@@ -299,6 +306,11 @@ fetch(API_URL)
                 'archivesCache',
                 newCache
             );
+        data.archives.forEach(archive => {
+            archive.posts.forEach(post => {
+                post.category = getCategory(post.title);
+            });
+        });
         archivesData = data;
         renderArchives(data);
 
@@ -338,6 +350,7 @@ function filterPosts(filter, button_object) {
         return;
     }
 
+    
     const filteredData = {
 
         success: true,
@@ -347,21 +360,23 @@ function filterPosts(filter, button_object) {
 
                 ...archive,
 
+
                 posts: archive.posts.filter(post => {
+                    
+                console.log({
+                        title: post.title,
+                        category: post.category
+                    });
 
-                    const searchableText = (
-                        post.title
-                    );
-
-                    return filter.test(searchableText);
-
+                    return post.category === filter;
                 })
+
 
             }))
             .filter(archive => archive.posts.length > 0)
 
     };
-
+    console.log(filteredData)
     renderArchives(filteredData);
 
     // Masquer "Voir plus"
@@ -475,7 +490,7 @@ window.addEventListener('scroll', () => {
 
 });
 
-/* Mobile Select */
+/* Mobile Select A RETIRER */
 
 function handleFilterChange(select) {
     const filtersMap = {
@@ -492,10 +507,10 @@ function handleFilterChange(select) {
         ? 'all'
         : filtersMap[select.value];
 
-    filterPosts(filter, select);
+    filterPosts(select.value, select);
 }
 
-// Déterminer les cartes
+// Déterminer les catégories
 
 
 function getCategory(title = "") {
