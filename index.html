@@ -13,9 +13,9 @@
 <script>
 const FILTERS = {
 
-        emploi: /(emploi|stage|apprentissage|pre.stage|pré.stage|hes|cdi|cdd|demande.emploi|spontan|arbeit|praktikum|lehrstelle|fh.vorpraktikum|vorpraktikum|unbefristet|befristet|einstellung|spontanbewerbung|lavoro|apprendistato|tirocinio|pre.tirocinio|sup|cti|ctd|candidatura|vacancy|hiring|recruitment|poste|stelle|job)/i,
+        emploi: /(emploi|stage|apprentissage|pre.stage|pré.stage|hes|cdi|cdd|demande.emploi|spontan|arbeit|praktikum|lehrstelle|fh.vorpraktikum|vorpraktikum|unbefristet|befristet|einstellung|spontanbewerbung|lavoro|apprendistato|tirocinio|pre.tirocinio|sup|cti|ctd|candidatura|vacancy|hiring|recruitment|poste|post|stelle|job)/i,
 
-        evenements: /(evenement|event|symposium|veranstaltung|jahrestagung|evento|conference|kongress|convegno|colloque|journee|tagung|giornata|webinaire|webinar|salon|messe|fiera)/i,
+        evenements: /(evenement|event|symposium|veranstaltung|jahrestagung|evento|conference|kongress|convegno|colloque|journee|tagung|giornata|webinaire|webinar|salon|messe|fiera|save the date)/i,
 
         communaute: /\b(communaute|communautes|community|gemeinschaft|comunita|annonce|ankündigung|annuncio|information|actualite|neuigkeit|notizia|news)\b/i,
 
@@ -25,7 +25,7 @@ const FILTERS = {
 
         recherches: /(recherches?\s+et\s+contributions?|recherche|contribution|forschung|ricerca|appel|aufruf|chiamata|call|enquete|umfrage|sondaggio|survey|collaborat|projet|projekt|progetto)/i,
 
-        newsletter: /(newsletter)/i
+        newsletter: /(newsletter|Swiss-Lib-Team)/i
 
     };
 </script>
@@ -83,34 +83,39 @@ const FILTERS = {
 
                 <!-- Filtres -->
                 <div class="filters">
-                    <button id="all" class="active" onclick="filterPosts('all', this)">Tous / Alle / Tutto</button>
+                    <button id="all" class="active" onclick="filterPosts('all', this)">
+                        <span class="badge all"></span>  Tous / Alle / Tutto
+                    </button>
 
                     <button onclick="filterPosts('emploi', this)">
-                        Emploi / Arbeit / Lavoro
+                       <span class="badge emploi"></span> Emploi / Arbeit / Lavoro
                     </button>
 
                     <button onclick="filterPosts('evenements', this)">
-                        Événements / Veranstaltungen / Eventi
+                         <span class="badge evenements"></span> Événements / Veranstaltungen / Eventi
                     </button>
 
                     <button onclick="filterPosts('communaute', this)">
-                        Communauté / Gemeinschaft / Comunita
+                        <span class="badge communaute"></span> Communauté / Gemeinschaft / Comunita
                     </button>
 
                     <button onclick="filterPosts('formations', this)">
-                        Formations / Weiterbildung / Formazione
+                        <span class="badge formations"></span> Formations / Weiterbildung / Formazione
                     </button>
 
                     <button onclick="filterPosts('ressources', this)">
-                        Ressources / Ressourcen / Risorse
+                        <span class="badge ressources"></span> Ressources / Ressourcen / Risorse
                     </button>
 
                     <button onclick="filterPosts('recherches', this)">
-                        Recherches / Forschung / Ricerche
+                        <span class="badge recherches"></span> Recherches / Forschung / Ricerche
                     </button>
 
                     <button onclick="filterPosts('newsletter', this)">
-                        Newsletter
+                        <span class="badge newsletter"></span> Newsletter
+                    </button>
+                    <button onclick="filterPosts('autre', this)">
+                        <span class="badge autre"></span> Non-catégorisé / Nicht kategorisiert / Non classificato
                     </button>
                 </div>
 
@@ -126,6 +131,7 @@ const FILTERS = {
                         <option value="ressources">Ressources / Ressourcen / Risorse</option>
                         <option value="recherches">Recherches / Forschung / Ricerche</option>
                         <option value="newsletter">Newsletter</option>
+                        <option value="autre">Non-catégorisé / Nicht kategorisiert / Non classificato</option>
                     </select>
                 </div>
 
@@ -294,7 +300,9 @@ if (cachedData) {
 // 2 - Mise à jour depuis le serveur
 //
 
-fetch(API_URL)
+fetch(API_URL, {
+    cache: 'no-store'
+})
     .then(response => response.json())
     .then(data => {
 
@@ -307,6 +315,7 @@ fetch(API_URL)
                 'archivesCache',
                 newCache
             );
+        }
         data.archives.forEach(archive => {
             archive.posts.forEach(post => {
                 post.category = getCategory(post.title);
@@ -315,7 +324,7 @@ fetch(API_URL)
         archivesData = data;
         renderArchives(data);
 
-        }
+       
 
     })
     .catch(error => {
