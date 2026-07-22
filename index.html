@@ -83,7 +83,7 @@ const FILTERS = {
 
                 <!-- Filtres -->
                 <div class="filters">
-                    <button class="active" onclick="filterPosts('all', this)">Tous / Alle / Tutto</button>
+                    <button id="all" class="active" onclick="filterPosts('all', this)">Tous / Alle / Tutto</button>
 
                     <button onclick="filterPosts('emploi', this)">
                         Emploi / Arbeit / Lavoro
@@ -130,7 +130,8 @@ const FILTERS = {
                 </div>
 
 
-                                <!-- Recherche -->
+                <!-- Recherche -->
+                 
                 <div class="search-box">
                     <svg class="search-icon" viewBox="0 0 24 24" fill="none">
                         <path
@@ -144,7 +145,7 @@ const FILTERS = {
                     <input
                         type="search"
                         id="search-category"
-                        placeholder="Rechercher un message ou une catégorie..."
+                        placeholder="Search on Swiss-Lib Archives..."
                         autocomplete="off"
                     />
                 </div>
@@ -327,6 +328,10 @@ fetch(API_URL)
 
 function filterPosts(filter, button_object) {
 
+    //Nettoyer la barre de recherche 
+    const searchInput = document.getElementById('search-category');
+    searchInput.value = "";
+    //Gestion du bouton actif
     document.querySelectorAll('.filters button').forEach(btn => {
         btn.classList.remove('active');
     });
@@ -433,6 +438,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const search = searchInput.value
         .trim()
         .toLowerCase();
+
+        
+  // Activer le bouton Tous
+    document.querySelectorAll('.filters button')
+        .forEach(btn => btn.classList.remove('active'));
+
+    document
+        .querySelector('.filters button[id="all"]')
+        ?.classList.add('active');
+
 
     if (search === '') {
 
