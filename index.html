@@ -28,6 +28,24 @@ const FILTERS = {
         newsletter: /(newsletter|Swiss-Lib-Team)/i
 
     };
+    
+const LANGUAGES = {
+    fr: /\b(le|la|les|des|de|du|pour|avec|questionnaire|recherche|emploi|offre|formation|formations|événement|événements|rappel|congrès|bibliothèque|rentrée|poste|candidature)\b/i,
+
+    de: /\b(der|die|das|den|dem|und|für|mit|forschung|arbeit|veranstaltung|veranstaltungen|kongress|bibliothek|stelle|bewerbung|weiterbildung)\b/i,
+
+    it: /\b(il|lo|gli|della|delle|dello|dei|per|con|ricerca|lavoro|evento|eventi|congresso|biblioteca|formazione|candidatura|chiusura|piattaforma)\b/i,
+
+    en: /\b(the|for|with|research|survey|job|jobs|event|events|conference|library|reminder|vacancy|recruitment|hiring)\b/i
+};
+
+
+
+let currentCategory = 'all';
+
+let currentLanguage = 'all';
+
+let currentSearch = '';
 </script>
         <header>
             <a id="top"></a>
@@ -80,7 +98,7 @@ const FILTERS = {
             <p>If nothing appears, you can consult <a href="https://listserv.linguistlist.org/pipermail/swiss-lib/">the original archives.</a></p>
 
             <div id="search-panel">
-
+                <h3 class="filter-title">Category</h3>
                 <!-- Filtres -->
                 <div class="filters">
                     <button id="all" class="active" onclick="filterPosts('all', this)">
@@ -135,9 +153,43 @@ const FILTERS = {
                     </select>
                 </div>
 
+                <h3 class="filter-title">Language</h3>
+                <div class="language-filters">
+                    <button class="active" onclick="filterLanguage('all', this)">
+                        🌍 Toutes / Alle / Tutto
+                    </button>
 
+                    <button onclick="filterLanguage('fr', this)">
+                        🇫🇷 Français
+                    </button>
+
+                    <button onclick="filterLanguage('de', this)">
+                        🇩🇪 Deutsch
+                    </button>
+
+                    <button onclick="filterLanguage('it', this)">
+                        🇮🇹 Italiano
+                    </button>
+
+                    <button onclick="filterLanguage('en', this)">
+                        🇬🇧 English
+                    </button>
+                </div>
+
+                 <!-- Mobile -->
+                  <div class="mobile-select">
+                    <select id="languages_select"
+                            onchange="filterLanguage(this.value, this)">
+                        <option class="active" value="all">🌍 Toutes les langues</option>
+                        <option value="fr">🇫🇷 Français</option>
+                        <option value="de">🇩🇪 Allemand / Deutsch</option>
+                        <option value="it">🇮🇹 Italien / Italiano</option>
+                        <option value="en">🇬🇧 Anglais / English</option>
+                        <option value="unknown">❓ Non détectée</option>
+                    </select>
+                </div>
                 <!-- Recherche -->
-                 
+                <h3 class="filter-title">Searching</h3>
                 <div class="search-box">
                     <svg class="search-icon" viewBox="0 0 24 24" fill="none">
                         <path
@@ -173,6 +225,8 @@ const FILTERS = {
     ↑
 </a>
 <script>
+
+   
 //Variables
 const API_URL = 'https://archive-swisslib.deepmining.ch/index.php';
 let visiblePosts = 20; //posts visible par défaut
@@ -223,14 +277,14 @@ function renderArchives(data) {
             const url =
                 'post_archives.html?id=' +
                 encodeURIComponent(post.url);
-            let title_post = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
+            //let title_post = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
 
             archiveHtml += `
                 <div class="card-archives"
                      data-category="${post.category}">
                     <a href="${url}">
                         <span class="badge ${post.category}"></span>
-                        <span class="title">${title_post}</span>
+                        <span class="title">${post.title}</span>
                         <span class="author">${post.author}</span>
                     </a>
                 </div>
@@ -284,6 +338,8 @@ if (cachedData) {
         //Catégories à déterminer
         archivesData.archives.forEach(archive => {
             archive.posts.forEach(post => {
+                post.title = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
+                post.languages = getLanguages(post.title);
                 post.category = getCategory(post.title);
             });
         });
@@ -318,6 +374,8 @@ fetch(API_URL, {
         }
         data.archives.forEach(archive => {
             archive.posts.forEach(post => {
+                post.title = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
+                post.languages = getLanguages(post.title);
                 post.category = getCategory(post.title);
             });
         });
@@ -331,72 +389,85 @@ fetch(API_URL, {
         console.error(error);
     });
 
+// Apply filters global
+
+function applyFilters() {
+
+    const filteredData = {
+        success: true,
+        archives: archivesData.archives
+            .map(archive => ({
+                ...archive,
+                posts: archive.posts.filter(post => {
+
+                    const matchCategory =
+                        currentCategory === 'all'
+                        || post.category === currentCategory;
+
+                    const matchLanguage =
+                        currentLanguage === 'all'
+                        || (
+                            post.languages &&
+                            post.languages.includes(currentLanguage)
+                        );
+
+                    const matchSearch =
+                        currentSearch === ''
+                        || (
+                            (post.title + ' ' + post.author)
+                                .toLowerCase()
+                                .includes(currentSearch)
+                        );
+
+                    return (
+                        matchCategory &&
+                        matchLanguage &&
+                        matchSearch
+                    );
+                })
+            }))
+            .filter(archive => archive.posts.length > 0)
+    };
+
+    renderArchives(filteredData);
+
+    const loadMoreBtn =
+        document.getElementById('load-more-btn');
+
+const hasActiveFilters =
+    currentCategory !== 'all'
+    || currentLanguage !== 'all'
+    || currentSearch !== '';
+
+    if (loadMoreBtn) {
+
+        if (hasActiveFilters) {
+
+            loadMoreBtn.style.display = 'none';
+
+        } else {
+
+            updateLoadMoreButton();
+
+        }
+    }
+}
+
 //
 // Filtres
 //
 
 function filterPosts(filter, button_object) {
 
-    //Nettoyer la barre de recherche 
-    const searchInput = document.getElementById('search-category');
-    searchInput.value = "";
-    //Gestion du bouton actif
-    document.querySelectorAll('.filters button').forEach(btn => {
-        btn.classList.remove('active');
-    });
+    document
+        .querySelectorAll('.filters button')
+        .forEach(btn => btn.classList.remove('active'));
 
     button_object.classList.add('active');
 
-    const loadMoreBtn =
-        document.getElementById('load-more-btn');
+    currentCategory = filter;
 
-    // Filtre Tous
-    if (filter === 'all') {
-
-        visiblePosts = postsPerPage;
-
-        renderArchives(archivesData);
-
-        if (loadMoreBtn) {
-            updateLoadMoreButton();
-        }
-
-        return;
-    }
-
-    
-    const filteredData = {
-
-        success: true,
-
-        archives: archivesData.archives
-            .map(archive => ({
-
-                ...archive,
-
-
-                posts: archive.posts.filter(post => {
-                    
-                console.log({
-                        title: post.title,
-                        category: post.category
-                    });
-
-                    return post.category === filter;
-                })
-
-
-            }))
-            .filter(archive => archive.posts.length > 0)
-
-    };
-    console.log(filteredData)
-    renderArchives(filteredData);
-
-    // Masquer "Voir plus"
-    if (loadMoreBtn) {
-        loadMoreBtn.style.display = 'none';
-    }
+    applyFilters();
 }
 //
 // Mise à jour des posts visibles
@@ -442,62 +513,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!searchInput) return;
 
-   searchInput.addEventListener('input', () => {
+searchInput.addEventListener('input', () => {
 
-    const search = searchInput.value
+    currentSearch = searchInput.value
         .trim()
         .toLowerCase();
 
-        
-  // Activer le bouton Tous
-    document.querySelectorAll('.filters button')
-        .forEach(btn => btn.classList.remove('active'));
-
-    document
-        .querySelector('.filters button[id="all"]')
-        ?.classList.add('active');
-
-        
-   // Remet le filtre sur Tous (mobile)
-    document.getElementById('filters_select').value = 'all';
-
-
-    if (search === '') {
-
-        visiblePosts = postsPerPage;
-
-        renderArchives(archivesData);
-
-        return;
-    }
-
-    const filteredData = {
-
-        success: true,
-
-        archives: archivesData.archives
-            .map(archive => ({
-
-                ...archive,
-
-                posts: archive.posts.filter(post => {
-
-                    const searchableText = (
-                        post.title +
-                        ' ' +
-                        post.author
-                    ).toLowerCase();
-
-                    return searchableText.includes(search);
-
-                })
-
-            }))
-            .filter(archive => archive.posts.length > 0)
-
-    };
-
-    renderArchives(filteredData);
+    applyFilters();
 
 });
 
@@ -542,17 +564,134 @@ function handleFilterChange(select) {
 
 
 function getCategory(title = "") {
-    if (FILTERS.newsletter.test(title)) return "newsletter";
-    if (FILTERS.emploi.test(title)) return "emploi";
-    if (FILTERS.evenements.test(title)) return "evenements";
-    if (FILTERS.formations.test(title)) return "formations";
-    if (FILTERS.ressources.test(title)) return "ressources";
-    if (FILTERS.recherches.test(title)) return "recherches";
-    if (FILTERS.communaute.test(title)) return "communaute";
+
+const TAGS = {
+
+    // Emploi
+    "emploi": "emploi",
+    "arbeit": "emploi",
+    "lavoro": "emploi",
+
+    // Événements
+    "evenement": "evenements",
+    "evenements": "evenements",
+    "événement": "evenements",
+    "événements": "evenements",
+    "veranstaltung": "evenements",
+    "veranstaltungen": "evenements",
+    "evento": "evenements",
+    "eventi": "evenements",
+
+    // Recherches
+    "recherche": "recherches",
+    "recherches": "recherches",
+    "recherches et contributions": "recherches",
+    "forschung": "recherches",
+    "ricerca": "recherches",
+    "ricerche": "recherches",
+
+    // Formations
+    "formation": "formations",
+    "formations": "formations",
+    "weiterbildung": "formations",
+    "weiterbildungen": "formations",
+    "formazione": "formations",
+    "formazioni": "formations",
+
+    // Ressources
+    "ressource": "ressources",
+    "ressources": "ressources",
+    "ressource(s)": "ressources",
+    "ressourcen": "ressources",
+    "risorsa": "ressources",
+    "risorse": "ressources",
+
+    // Communauté
+    "communaute": "communaute",
+    "communauté": "communaute",
+    "gemeinschaft": "communaute",
+    "comunita": "communaute",
+    "comunità": "communaute",
+
+    // Newsletter
+    "newsletter": "newsletter"
+};
+
+    // Vérification des tags entre []
+    const match = title.match(/^\[([^\]]+)\]/);
+
+    if (match) {
+        const tag = match[1]
+            .trim()
+            .toLowerCase();
+
+            if (TAGS[tag]) {
+
+            return TAGS[tag];
+
+        }
+    }
+
+    // On retire le tag avant les regex
+    const cleanTitle = title.replace(
+        /^\[[^\]]+\]\s*/,
+        ''
+    );
+
+    // Fallback sur les regex existantes
+    if (FILTERS.newsletter.test(cleanTitle)) return "newsletter";
+    if (FILTERS.emploi.test(cleanTitle)) return "emploi";
+    if (FILTERS.evenements.test(cleanTitle)) return "evenements";
+    if (FILTERS.formations.test(cleanTitle)) return "formations";
+    if (FILTERS.ressources.test(cleanTitle)) return "ressources";
+    if (FILTERS.recherches.test(cleanTitle)) return "recherches";
+    if (FILTERS.communaute.test(cleanTitle)) return "communaute";
 
     return "autre";
 }
 
+//Fonctions Langues
+
+function getLanguages(title = "") {
+
+    const languages = [];
+
+    console.log("Titre :", title);
+
+    Object.entries(LANGUAGES).forEach(([lang, regex]) => {
+
+        const matched = regex.test(title);
+
+        console.log(
+            lang,
+            matched
+        );
+
+        if (matched) {
+            languages.push(lang);
+        }
+
+    });
+
+    console.log("Résultat :", languages);
+
+    return languages.length
+        ? languages
+        : ["unknown"];
+}
+
+function filterLanguage(language, button_object) {
+
+    document
+        .querySelectorAll('.language-filters button')
+        .forEach(btn => btn.classList.remove('active'));
+
+    button_object.classList.add('active');
+
+    currentLanguage = language;
+
+    applyFilters();
+}
 
 
 </script>
