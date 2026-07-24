@@ -1,5 +1,6 @@
 /* Constantes des filtres / langues, contenant les REGEX et termes pour catégoriser et rechercher les posts */
 
+/* Posts à supprimer de l'affichage */
 const BLACKLIST_POSTS = [
     /TEST 0/i,
     /Test 2/i,
@@ -9,10 +10,16 @@ const BLACKLIST_POSTS = [
     /mon premier mail ici/i
 ];
 
+/* Recatégorie manuel */
+const MANUAL_CATEGORIES = {
+    "Soirée du GRBV - Prix romand de bibliothéconomie 2025": "evenements",
+    'Online Lecture: "Beyond the 3D Model: When Heritage Becomes Data, Evidence, and Memory': "evenements"
+};
+
 /* Regex pour les termes à détecter dans l'entierêté du titre */
 const FILTERS = {
 
-        emploi: /(emploi|stage|apprentissage|pre.stage|pré.stage|hes|cdi|cdd|demande.emploi|spontan|arbeit|praktikum|lehrstelle|fh.vorpraktikum|vorpraktikum|unbefristet|befristet|einstellung|spontanbewerbung|lavoro|apprendistato|tirocinio|pre.tirocinio|sup|cti|ctd|candidatura|vacancy|hiring|recruitment|poste|post|stelle|job)/i,
+        emploi: /(emploi|stage|apprentissage|pre.stage|pré.stage|hes|cdi|cdd|demande.emploi|spontan|arbeit|praktikum|lehrstelle|fh.vorpraktikum|vorpraktikum|unbefristet|befristet|einstellung|spontanbewerbung|lavoro|apprendistato|tirocinio|pre.tirocinio|sup|cti|ctd|candidatura|vacancy|hiring|recruitment|poste|post|stelle|\bstelle\w*|job)/i,
 
         evenements: /(evenement|event|symposium|veranstaltung|jahrestagung|evento|conference|kongress|convegno|colloque|journee|tagung|giornata|webinaire|webinar|salon|messe|fiera|save the date)/i,
 
@@ -36,6 +43,18 @@ const TAGS = {
     "emploi": "emploi",
     "arbeit": "emploi",
     "lavoro": "emploi",
+    
+    // Variantes de
+    "stelle": "emploi",
+    "stellenangebot": "emploi",
+    "stellenausschreibung": "emploi",
+    "stellenanzeige": "emploi",
+    "stelleninserat": "emploi",
+
+    // Variantes it
+    "offerta di lavoro": "emploi",
+    "posto di lavoro": "emploi",
+
 
     // Événements
     "evenement": "evenements",
@@ -361,6 +380,12 @@ function filterPosts(filter, button_object) {
 
 // Déterminer les catégories
 function getCategory(title = "") {
+    
+    // Recatégoriser manuellement ceux qui n'ont pas de catégories
+    if (MANUAL_CATEGORIES[title]) {
+        return MANUAL_CATEGORIES[title];
+    }
+
     // Vérification des tags entre []
     const match = title.match(/^\[([^\]]+)\]/);
 
@@ -372,7 +397,11 @@ function getCategory(title = "") {
             if (TAGS[tag]) {
 
             return TAGS[tag];
+        }
 
+        // Variantes allemandes commençant par "stelle"
+        if (tag.startsWith("stelle")) {
+            return "emploi";
         }
     }
 
