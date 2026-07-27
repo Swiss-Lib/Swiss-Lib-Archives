@@ -238,9 +238,9 @@ a:hover {
 /* Card archives */
 
 .cards-container-archives {
-
     display: flex;
-    flex-direction: column-reverse;             
+    /*flex-direction: column-reverse;*/
+    flex-direction: column;             
     gap: 8px;
     margin-bottom: 40px;
     justify-content: center;      /* centre les cards */

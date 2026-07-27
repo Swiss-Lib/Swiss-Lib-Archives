@@ -1,0 +1,49 @@
+{
+    "_description": {
+        "hidden": "Masque complètement le post",
+        "category": "Catégorie forcée",
+        "rename": "Titre à afficher à la place"
+    },
+  "posts": {
+    "Week-of-Mon-20260427/000000": {
+      "_comment": "TEST 30.04 - Nouvelle version Swiss-Lib",
+      "hidden": true
+    },
+    "Week-of-Mon-20260427/000002": {
+      "_comment": "TEST 30.04 - Nouvelle version Swiss-Lib",
+      "hidden": true
+    },
+    "Week-of-Mon-20260427/000001": {
+      "_comment": "Test 2",
+      "hidden": true
+    },
+    "Week-of-Mon-20260518/000004": {
+      "_comment": "TEST 0",
+      "hidden": true
+    },
+    "Week-of-Mon-20260504/000003": {
+      "_comment": "mon premier mail ici",
+      "hidden": true
+    },
+    "Week-of-Mon-20260713/000077": {
+      "_comment": "Supprimer une adresse mail",
+      "hidden": true
+    },
+    "Week-of-Mon-20260629/000060": {
+      "_comment": "WG: [extern] Fwd: [Communaute] Gratis abzugeben: Bibliotheksmaterial aufgrund unseres Umzugs",
+      "hidden": true
+    },
+    "Week-of-Mon-20260518/000007": {
+      "_comment": "Soirée du GRBV - Prix romand de bibliothéconomie 2025",
+      "category": "evenements"
+    },
+    "Week-of-Mon-20260629/000045": {
+      "_comment": "Online Lecture: \"Beyond the 3D Model: When Heritage Becomes Data, Evidence, and Memory\"",
+      "category": "evenements"
+    },
+    "Week-of-Mon-20260713/000087": {
+      "_comment": "WG: Swiss-Lib post from ainhoa.gysi at srf.ch requires approval",
+      "rename": "[Arbeit] Mediendokumentalist : in Musik 80%"
+    }
+  }
+}
