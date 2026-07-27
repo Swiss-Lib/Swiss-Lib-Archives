@@ -32,8 +32,9 @@ window.addEventListener("franc-ready", () => {
 });
 
 async function init() {
-
+    console.log("Avant chargement règles");
     await loadPostRules();
+    console.log("Après chargement règles");
     loadArchives();
 }
 
