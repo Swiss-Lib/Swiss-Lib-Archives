@@ -1,12 +1,11 @@
-/* Constantes des filtres / langues, contenant les REGEX et termes pour catégoriser et rechercher les posts */
-let POST_RULES = {};
+/* Constantes contenant les règles à redéfinir : catégorie à forcer sur un post, renommer un post ou cacher un post*/
 
 async function loadPostRules() {
 
     try {
 
         const response =
-            await fetch('json/post-rules.json');
+            await fetch('json/post-rules.json?v=12');
 
         POST_RULES =
             await response.json();

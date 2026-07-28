@@ -32,9 +32,7 @@ window.addEventListener("franc-ready", () => {
 });
 
 async function init() {
-    console.log("Avant chargement règles");
     await loadPostRules();
-    console.log("Après chargement règles");
     loadArchives();
 }
 
@@ -64,7 +62,7 @@ async function loadArchives() {
     //
     // 2 - Mise à jour depuis le serveur
     //
-
+    console.time("API");
     fetch(API_URL, {
         cache: 'no-store'
     })
@@ -73,7 +71,7 @@ async function loadArchives() {
 
             const newCache = JSON.stringify(data);
             const oldCache = localStorage.getItem('archivesCache');
-
+            console.timeEnd("API");
             if (newCache !== oldCache) {
 
                 localStorage.setItem(
@@ -232,11 +230,6 @@ function renderArchives(data) {
         }
 
     }
-
-    console.log(
-    "displayedPosts =",
-    displayedPosts
-);
 }
 
 // Applique les filtres (catégories et langages) pour afficher les posts
@@ -293,15 +286,6 @@ function applyFilters() {
         if (loadMoreBtn) {
             updateLoadMoreButton(filteredData);
         }
-
-        console.log(
-    "visiblePosts =", visiblePosts,
-    "totalPosts =",
-    filteredData.archives.reduce(
-        (t, a) => t + a.posts.length,
-        0
-    )
-);
 }
 
 //
