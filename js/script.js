@@ -51,6 +51,19 @@ async function loadArchives() {
 
         try {
             archivesData = preparePosts(JSON.parse(cachedData));
+            console.log(
+                "CACHE",
+                JSON.parse(cachedData)
+                    .archives[0]
+                    ?.posts[0]
+                    ?.title
+            );
+            console.log(
+                "CACHE",
+                JSON.parse(cachedData).archives[0].posts.length
+            );
+
+
             applyFilters();
 
         } catch(e) {
@@ -62,13 +75,31 @@ async function loadArchives() {
     //
     // 2 - Mise à jour depuis le serveur
     //
+    console.log("Début API");
     console.time("API");
+    console.log(
+        "Début API",
+        new Date().toLocaleTimeString()
+    );
+
+    console.time("HTTP");
+
     fetch(API_URL, {
         cache: 'no-store'
     })
-        .then(response => response.json())
-        .then(data => {
+            .then(response => {
 
+console.timeEnd("HTTP");
+
+console.log(
+    "Fin API",
+    new Date().toLocaleTimeString()
+);
+
+            return response.json();
+
+            })
+        .then(data => {
             const newCache = JSON.stringify(data);
             const oldCache = localStorage.getItem('archivesCache');
             console.timeEnd("API");
@@ -80,6 +111,16 @@ async function loadArchives() {
                 );
             }
             archivesData = preparePosts(data);
+            console.log(
+                "API",
+                data.archives[0]
+                    ?.posts[0]
+                    ?.title
+            );
+            console.log(
+                "API",
+                data.archives[0].posts.length
+            );
             applyFilters();
         })
         .catch(error => {
@@ -146,7 +187,6 @@ function getPostRule(postId) {
 // Afficher les archives
 // data : données des posts à afficher
 function renderArchives(data) {
-    
     //Mode recherche ?
     const isSearching =
         document.getElementById('search-category')
@@ -214,7 +254,7 @@ function renderArchives(data) {
         });
 
     container.innerHTML = html;
-
+           
     const loadMoreBtn =
         document.getElementById('load-more-btn');
 
@@ -274,7 +314,7 @@ function applyFilters() {
 
     renderArchives(filteredData);
     
-    //Cacher le bouton de voir plus si on est pas en "all"
+    //Apparition du bouton "voir plus" seulement quand il y'a assez de posts à réafficher
     const loadMoreBtn =
         document.getElementById('load-more-btn');
 
@@ -394,7 +434,6 @@ function getLanguages(title = "") {
             window.detectLanguageFrancAll(title, {
                 only: ["fra", "deu", "ita", "eng"]
             });
-        
 
         const map = {
             fra: "fr",
@@ -403,8 +442,10 @@ function getLanguages(title = "") {
             eng: "en"
         };
 
-        if (map[detected]) {
-            languages.push(map[detected]);
+        const bestLanguage = detected?.[0]?.[0];
+
+        if (map[bestLanguage]) {
+            languages.push(map[bestLanguage]);
         }
     }
 
