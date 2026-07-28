@@ -828,9 +828,6 @@ function restoreVisiblePosts() {
 }
 
 //Pour le mobile
-window.addEventListener('focus', () => {
-    alert('FOCUS');
-});
 
 window.addEventListener('pageshow', () => {
     alert('PAGESHOW');
