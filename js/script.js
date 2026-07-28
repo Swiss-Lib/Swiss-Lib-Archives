@@ -11,6 +11,10 @@ let currentCategory = 'all';
 let currentLanguage = 'all';
 let currentSearch = '';
 
+// Empêche le navigateur de restaurer lui-même le scroll
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
 
 // Chargement de FRANC et recalcul des langues //
 window.addEventListener("franc-ready", () => {
@@ -32,8 +36,27 @@ window.addEventListener("franc-ready", () => {
 });
 
 async function init() {
+
+    const isReturningFromPost =
+        sessionStorage.getItem(
+            'returningFromPost'
+        ) === 'true';
+
+    if (!isReturningFromPost) {
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'auto'
+        });
+
+    }
+
     await loadPostRules();
+
+    restoreState();
+
     loadArchives();
+
 }
 
 init();
@@ -63,7 +86,7 @@ async function loadArchives() {
                 JSON.parse(cachedData).archives[0].posts.length
             );
 
-
+            restoreVisiblePosts()
             applyFilters();
 
         } catch(e) {
@@ -221,16 +244,17 @@ function renderArchives(data) {
 
             archiveHasPosts = true;
             displayedPosts++;
+            let idpost = post.url.replace(/\.html$/i, '');
+            let safePostId = idpost.replaceAll('/', '-');
 
             const url =
-                'post_archives.html?id=' +
-                encodeURIComponent(post.url);
+                'post_archives.html?id=' + encodeURIComponent(post.url);
             //let title_post = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
    
             archiveHtml += `
-                <div class="card-archives"
+                <div id="${safePostId}" class="card-archives"
                      data-category="${post.category}">
-                    <a href="${url}">
+                    <a href="${url}" onclick="rememberPost('${safePostId}')">
                         <span class="badge ${post.category}"></span>
                         <span class="title">${post.title}</span>
                         <span class="author">${post.author}</span>
@@ -254,6 +278,7 @@ function renderArchives(data) {
         });
 
     container.innerHTML = html;
+    restoreLastPostPosition();
            
     const loadMoreBtn =
         document.getElementById('load-more-btn');
@@ -524,3 +549,181 @@ window.addEventListener('scroll', () => {
     }
 
 });
+
+/* Quand on clique sur un post, se remémorer de là où on vient (filtres de l'utilisateur et derniers posts) */
+function rememberPost(postId) {
+
+    sessionStorage.setItem(
+        'returningFromPost',
+        'true'
+    );
+
+    sessionStorage.setItem(
+        'lastPostId',
+        postId
+    );
+
+    sessionStorage.setItem(
+        'visiblePosts',
+        visiblePosts
+    );
+
+    sessionStorage.setItem(
+        'currentCategory',
+        currentCategory
+    );
+
+    sessionStorage.setItem(
+        'currentLanguage',
+        currentLanguage
+    );
+
+    sessionStorage.setItem(
+        'currentSearch',
+        currentSearch
+    );
+}
+
+//Restaurer le scroll sur la page
+function restoreLastPostPosition() {
+
+    const lastPostId =
+        sessionStorage.getItem('lastPostId');
+
+    if (!lastPostId) {
+        return;
+    }
+
+    const postElement =
+        document.getElementById(
+            `${lastPostId}`
+        );
+
+    if (!postElement) {
+        return;
+    }
+
+    postElement.scrollIntoView({
+        block: 'center'
+    });
+
+    // Nettoyage
+    setTimeout(() => {
+
+        sessionStorage.removeItem('returningFromPost');
+        sessionStorage.removeItem('lastPostId');
+        sessionStorage.removeItem('visiblePosts');
+        sessionStorage.removeItem('currentCategory');
+        sessionStorage.removeItem('currentLanguage');
+        sessionStorage.removeItem('currentSearch');
+
+    }, 200);
+}
+//Restaurer l'état des filtres et recherche quand on revient d'un post
+function restoreState() {
+
+    const isReturningFromPost =
+        sessionStorage.getItem(
+            'returningFromPost'
+        ) === 'true';
+
+    // Nouvelle visite ou F5 :
+    // on ne restaure rien
+    if (!isReturningFromPost) {
+
+        visiblePosts = postsPerPage;
+        currentCategory = 'all';
+        currentLanguage = 'all';
+        currentSearch = '';
+
+      
+        return;
+    }
+
+    // Nombre de posts affichés
+    const savedVisiblePosts =
+        sessionStorage.getItem(
+            'visiblePosts'
+        );
+
+    if (savedVisiblePosts) {
+
+        visiblePosts =
+            parseInt(savedVisiblePosts, 10);
+
+    }
+
+    // Filtres restaurés
+    currentCategory =
+        sessionStorage.getItem(
+            'currentCategory'
+        ) || 'all';
+
+    currentLanguage =
+        sessionStorage.getItem(
+            'currentLanguage'
+        ) || 'all';
+
+    currentSearch =
+        sessionStorage.getItem(
+            'currentSearch'
+        ) || '';
+
+    // Catégories
+    document
+        .querySelectorAll('.filters button')
+        .forEach(btn =>
+            btn.classList.remove('active')
+        );
+
+    document
+        .querySelector(
+            `.filters button[value="${currentCategory}"]`
+        )
+        ?.classList.add('active');
+
+    // Langues
+    document
+        .querySelectorAll('.language-filters button')
+        .forEach(btn =>
+            btn.classList.remove('active')
+        );
+
+    document
+        .querySelector(
+            `.language-filters button[value="${currentLanguage}"]`
+        )
+        ?.classList.add('active');
+
+    // Recherche
+    const searchInput =
+        document.getElementById(
+            'search-category'
+        );
+
+    if (searchInput) {
+
+        searchInput.value =
+            currentSearch;
+
+    }
+
+}
+
+
+
+function restoreVisiblePosts() {
+
+    const savedVisiblePosts =
+        sessionStorage.getItem(
+            'visiblePosts'
+        );
+
+    if (savedVisiblePosts) {
+
+        visiblePosts =
+            parseInt(savedVisiblePosts, 10);
+
+    }
+
+}
