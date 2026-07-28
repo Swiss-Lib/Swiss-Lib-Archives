@@ -828,23 +828,18 @@ function restoreVisiblePosts() {
 }
 
 //Pour le mobile
-window.addEventListener('online', () => {
-
-    alert('ONLINE');
-
-});
-
-document.addEventListener('visibilitychange', () => {
-
-    alert(
-        'VISIBILITY : ' +
-        document.visibilityState
-    );
-
-});
-
 window.addEventListener('focus', () => {
-
     alert('FOCUS');
+});
 
+window.addEventListener('pageshow', () => {
+    alert('PAGESHOW');
+});
+
+window.addEventListener('online', () => {
+    alert('ONLINE');
+});
+
+document.addEventListener('resume', () => {
+    alert('RESUME');
 });
