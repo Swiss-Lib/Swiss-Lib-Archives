@@ -828,16 +828,29 @@ function restoreVisiblePosts() {
 }
 
 //Pour le mobile
-window.addEventListener('pageshow', (event) => {
+document.addEventListener('visibilitychange', () => {
 
-    const isReturningFromPost =
-        sessionStorage.getItem(
-            'returningFromPost'
-        ) === 'true';
+    if (document.visibilityState === 'visible') {
 
-    if (!isReturningFromPost && event.persisted) {
+        const timestamp =
+            sessionStorage.getItem(
+                'returnTimestamp'
+            );
 
-        window.location.reload();
+        const isRecentReturn =
+            timestamp &&
+            (
+                Date.now() -
+                parseInt(timestamp, 10)
+            ) < 60000;
+
+        if (!isRecentReturn) {
+
+            clearStoredState();
+
+            window.location.reload();
+
+        }
 
     }
 
