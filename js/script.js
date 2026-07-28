@@ -51,6 +51,7 @@ async function init() {
 
     }
 
+
     await loadPostRules();
 
     restoreState();
@@ -829,6 +830,5 @@ function restoreVisiblePosts() {
 
 //Pour le mobile
 window.addEventListener('pageshow', () => {
-
-
+    clearStoredState();
 });
