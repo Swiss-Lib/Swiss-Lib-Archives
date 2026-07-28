@@ -868,5 +868,16 @@ function restoreVisiblePosts() {
 
 //Pour le mobile
 window.addEventListener('pageshow', () => {
+
     clearStoredState();
+
+    currentCategory = 'all';
+    currentLanguage = 'all';
+    currentSearch = '';
+    visiblePosts = postsPerPage;
+
+    resetFiltersUI();
+
+    applyFilters();
+
 });
