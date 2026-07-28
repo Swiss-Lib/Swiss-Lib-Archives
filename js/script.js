@@ -867,17 +867,38 @@ function restoreVisiblePosts() {
 }
 
 //Pour le mobile
+
+window.addEventListener('pagehide', () => {
+
+    sessionStorage.setItem(
+        'lastPageHide',
+        Date.now()
+    );
+
+});
+
 window.addEventListener('pageshow', () => {
 
-    clearStoredState();
+    const lastPageHide =
+        sessionStorage.getItem(
+            'lastPageHide'
+        );
 
-    currentCategory = 'all';
-    currentLanguage = 'all';
-    currentSearch = '';
-    visiblePosts = postsPerPage;
+    if (!lastPageHide) {
+        return;
+    }
 
-    resetFiltersUI();
+    const elapsed =
+        Date.now() -
+        parseInt(lastPageHide, 10);
 
-    applyFilters();
+    // exemple : plus de 2 minutes
+    if (elapsed > 120000) {
+
+        clearStoredState();
+
+        location.reload();
+
+    }
 
 });
