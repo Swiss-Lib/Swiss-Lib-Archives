@@ -575,9 +575,15 @@ window.addEventListener('scroll', () => {
 /* Quand on clique sur un post, se remémorer de là où on vient (filtres de l'utilisateur et derniers posts) */
 function rememberPost(postId) {
 
+
     sessionStorage.setItem(
         'returningFromPost',
         'true'
+    );
+    
+    sessionStorage.setItem(
+    'returnTimestamp',
+    Date.now()
     );
 
     sessionStorage.setItem(
@@ -649,17 +655,32 @@ function restoreState() {
             'returningFromPost'
         ) === 'true';
 
-    // Nouvelle visite ou F5 :
-    // on ne restaure rien
-    if (!isReturningFromPost) {
+    const timestamp =
+        sessionStorage.getItem(
+            'returnTimestamp'
+        );
+
+    const isRecentReturn =
+        timestamp &&
+        (
+            Date.now() -
+            parseInt(timestamp, 10)
+        ) < 5 * 60 * 1000; // 5 minutes
+
+    if (
+        !isReturningFromPost ||
+        !isRecentReturn
+    ) {
+
+        clearStoredState();
 
         visiblePosts = postsPerPage;
         currentCategory = 'all';
         currentLanguage = 'all';
         currentSearch = '';
 
-      
         return;
+
     }
 
     // Nombre de posts affichés
@@ -675,7 +696,7 @@ function restoreState() {
 
     }
 
-    // Filtres restaurés
+    // Filtres
     currentCategory =
         sessionStorage.getItem(
             'currentCategory'
@@ -691,33 +712,7 @@ function restoreState() {
             'currentSearch'
         ) || '';
 
-    // Mobile : catégories
-    const categorySelect =
-        document.getElementById(
-            'filters_select'
-        );
-
-    if (categorySelect) {
-
-        categorySelect.value =
-            currentCategory;
-
-    }
-
-    // Mobile : langues
-    const languageSelect =
-        document.getElementById(
-            'languages_select'
-        );
-
-    if (languageSelect) {
-
-            languageSelect.value =
-                currentLanguage;
-
-    }
-
-    // Catégories
+    // Boutons catégories
     document
         .querySelectorAll('.filters button')
         .forEach(btn =>
@@ -730,7 +725,7 @@ function restoreState() {
         )
         ?.classList.add('active');
 
-    // Langues
+    // Boutons langues
     document
         .querySelectorAll('.language-filters button')
         .forEach(btn =>
@@ -742,6 +737,32 @@ function restoreState() {
             `.language-filters button[value="${currentLanguage}"]`
         )
         ?.classList.add('active');
+
+    // Select mobile catégories
+    const categorySelect =
+        document.getElementById(
+            'filters_select'
+        );
+
+    if (categorySelect) {
+
+        categorySelect.value =
+            currentCategory;
+
+    }
+
+    // Select mobile langues
+    const languageSelect =
+        document.getElementById(
+            'languages_select'
+        );
+
+    if (languageSelect) {
+
+        languageSelect.value =
+            currentLanguage;
+
+    }
 
     // Recherche
     const searchInput =
@@ -758,7 +779,37 @@ function restoreState() {
 
 }
 
+function clearStoredState() {
 
+    sessionStorage.removeItem(
+        'returningFromPost'
+    );
+
+    sessionStorage.removeItem(
+        'returnTimestamp'
+    );
+
+    sessionStorage.removeItem(
+        'lastPostId'
+    );
+
+    sessionStorage.removeItem(
+        'visiblePosts'
+    );
+
+    sessionStorage.removeItem(
+        'currentCategory'
+    );
+
+    sessionStorage.removeItem(
+        'currentLanguage'
+    );
+
+    sessionStorage.removeItem(
+        'currentSearch'
+    );
+
+}
 
 function restoreVisiblePosts() {
 
