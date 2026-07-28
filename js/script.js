@@ -867,37 +867,23 @@ function restoreVisiblePosts() {
 }
 
 //Pour le mobile
-
-window.addEventListener('pagehide', () => {
-
-    sessionStorage.setItem(
-        'lastPageHide',
-        Date.now()
-    );
-
-});
-
 window.addEventListener('pageshow', () => {
 
-    const lastPageHide =
+    const isReturningFromPost =
         sessionStorage.getItem(
-            'lastPageHide'
-        );
+            'returningFromPost'
+        ) === 'true';
 
-    if (!lastPageHide) {
-        return;
-    }
+    if (!isReturningFromPost) {
 
-    const elapsed =
-        Date.now() -
-        parseInt(lastPageHide, 10);
+        currentCategory = 'all';
+        currentLanguage = 'all';
+        currentSearch = '';
+        visiblePosts = postsPerPage;
 
-    // exemple : plus de 2 minutes
-    if (elapsed > 120000) {
+        resetFiltersUI();
 
-        clearStoredState();
-
-        location.reload();
+        applyFilters();
 
     }
 
