@@ -390,6 +390,17 @@ a:hover {
     border-color: #2a5bd7;
 }
 
+/* Quand il n'y a pas de résultats de posts */
+.no-results {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.no-results h3 {
+    margin-bottom: 10px;
+}
+
 /* Search panel and filters */
 
 #search-panel {

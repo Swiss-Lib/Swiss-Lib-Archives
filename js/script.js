@@ -276,7 +276,29 @@ function renderArchives(data) {
             }
 
         });
+    //Si les posts affichés sont au nombre de 0
+    if (displayedPosts === 0) {
 
+        if (currentSearch !== '') {
+
+            html = `
+                <div class="no-results">
+                    Aucun résultat pour
+                    "<strong>${currentSearch}</strong>".
+                </div>
+            `;
+
+        } else {
+
+            html = `
+                <div class="no-results">
+                    Aucun post ne correspond aux filtres sélectionnés.
+                </div>
+            `;
+
+        }
+
+    }
     container.innerHTML = html;
     restoreLastPostPosition();
            
@@ -668,6 +690,32 @@ function restoreState() {
         sessionStorage.getItem(
             'currentSearch'
         ) || '';
+
+    // Mobile : catégories
+    const categorySelect =
+        document.getElementById(
+            'filters_select'
+        );
+
+    if (categorySelect) {
+
+        categorySelect.value =
+            currentCategory;
+
+    }
+
+    // Mobile : langues
+    const languageSelect =
+        document.getElementById(
+            'languages_select'
+        );
+
+    if (languageSelect) {
+
+            languageSelect.value =
+                currentLanguage;
+
+    }
 
     // Catégories
     document
