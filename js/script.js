@@ -679,7 +679,7 @@ function restoreState() {
         currentCategory = 'all';
         currentLanguage = 'all';
         currentSearch = '';
-
+        resetFiltersUI()
         return;
 
     }
@@ -782,13 +782,37 @@ function restoreState() {
 
 function clearStoredState() {
 
-    sessionStorage.removeItem('returningFromPost');
-    sessionStorage.removeItem('returnTimestamp');
-    sessionStorage.removeItem('lastPostId');
-    sessionStorage.removeItem('visiblePosts');
-    sessionStorage.removeItem('currentCategory');
-    sessionStorage.removeItem('currentLanguage');
-    sessionStorage.removeItem('currentSearch');
+    sessionStorage.removeItem(
+        'returningFromPost'
+    );
+
+    sessionStorage.removeItem(
+        'returnTimestamp'
+    );
+
+    sessionStorage.removeItem(
+        'lastPostId'
+    );
+
+    sessionStorage.removeItem(
+        'visiblePosts'
+    );
+
+    sessionStorage.removeItem(
+        'currentCategory'
+    );
+
+    sessionStorage.removeItem(
+        'currentLanguage'
+    );
+
+    sessionStorage.removeItem(
+        'currentSearch'
+    );
+
+}
+
+function resetFiltersUI() {
 
     const categorySelect =
         document.getElementById('filters_select');
@@ -803,6 +827,27 @@ function clearStoredState() {
     if (languageSelect) {
         languageSelect.value = 'all';
     }
+
+    document
+        .querySelectorAll('.filters button')
+        .forEach(btn =>
+            btn.classList.remove('active')
+        );
+
+    document
+        .querySelector('.filters button[value="all"]')
+        ?.classList.add('active');
+
+    document
+        .querySelectorAll('.language-filters button')
+        .forEach(btn =>
+            btn.classList.remove('active')
+        );
+
+    document
+        .querySelector('.language-filters button[value="all"]')
+        ?.classList.add('active');
+
 }
 
 function restoreVisiblePosts() {
