@@ -782,34 +782,27 @@ function restoreState() {
 
 function clearStoredState() {
 
-    sessionStorage.removeItem(
-        'returningFromPost'
-    );
+    sessionStorage.removeItem('returningFromPost');
+    sessionStorage.removeItem('returnTimestamp');
+    sessionStorage.removeItem('lastPostId');
+    sessionStorage.removeItem('visiblePosts');
+    sessionStorage.removeItem('currentCategory');
+    sessionStorage.removeItem('currentLanguage');
+    sessionStorage.removeItem('currentSearch');
 
-    sessionStorage.removeItem(
-        'returnTimestamp'
-    );
+    const categorySelect =
+        document.getElementById('filters_select');
 
-    sessionStorage.removeItem(
-        'lastPostId'
-    );
+    if (categorySelect) {
+        categorySelect.value = 'all';
+    }
 
-    sessionStorage.removeItem(
-        'visiblePosts'
-    );
+    const languageSelect =
+        document.getElementById('languages_select');
 
-    sessionStorage.removeItem(
-        'currentCategory'
-    );
-
-    sessionStorage.removeItem(
-        'currentLanguage'
-    );
-
-    sessionStorage.removeItem(
-        'currentSearch'
-    );
-
+    if (languageSelect) {
+        languageSelect.value = 'all';
+    }
 }
 
 function restoreVisiblePosts() {
