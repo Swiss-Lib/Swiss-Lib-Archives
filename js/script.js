@@ -86,7 +86,7 @@ async function loadArchives() {
                 JSON.parse(cachedData).archives[0].posts.length
             );
 
-            restoreVisiblePosts()
+            /*restoreVisiblePosts()*/
             applyFilters();
 
         } catch(e) {
@@ -580,7 +580,7 @@ function rememberPost(postId) {
         'returningFromPost',
         'true'
     );
-    
+
     sessionStorage.setItem(
     'returnTimestamp',
     Date.now()
