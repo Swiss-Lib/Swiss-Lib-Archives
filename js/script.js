@@ -573,6 +573,8 @@ window.addEventListener('scroll', () => {
 
 });
 
+// Pour gérer le fait de revenir sur la page d'accueil au même endroit où l'on a quitté (quand on clique sur un post et qu'on revient)
+
 /* Quand on clique sur un post, se remémorer de là où on vient (filtres de l'utilisateur et derniers posts) */
 function rememberPost(postId) {
 
@@ -648,7 +650,8 @@ function restoreLastPostPosition() {
 
     }, 200);
 }
-//Restaurer l'état des filtres et recherche quand on revient d'un post
+
+//Restaurer l'état des filtres et recherche quand on revient sur la page principal, depuis la page d'un post
 function restoreState() {
 
     const isReturningFromPost =
@@ -780,6 +783,7 @@ function restoreState() {
 
 }
 
+//Remet à zéro toutes les variables du cache
 function clearStoredState() {
 
     sessionStorage.removeItem(
@@ -812,6 +816,7 @@ function clearStoredState() {
 
 }
 
+//Reset des filtres sur l'interface mobile
 function resetFiltersUI() {
 
     const categorySelect =
@@ -850,23 +855,8 @@ function resetFiltersUI() {
 
 }
 
-function restoreVisiblePosts() {
 
-    const savedVisiblePosts =
-        sessionStorage.getItem(
-            'visiblePosts'
-        );
-
-    if (savedVisiblePosts) {
-
-        visiblePosts =
-            parseInt(savedVisiblePosts, 10);
-
-    }
-
-}
-
-//Pour le mobile
+//Pour le mobile : réaffiche les catégories/filtres par défaut quand on ferme/revient sur le navigateur
 window.addEventListener('pageshow', () => {
 
     const isReturningFromPost =

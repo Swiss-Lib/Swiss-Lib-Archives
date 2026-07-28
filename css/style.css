@@ -167,9 +167,19 @@ table a:hover {
 
 /* Blocs d'introduction et img */
 
-.container, main {
+.container, .container_mobile, main {
     max-width: 900px;
     margin: 40px auto;
+}
+
+/* Bloc d'intro mobile */
+.container_mobile {
+    display : none;
+}
+
+.language-info summary {
+    cursor: pointer;
+    font-style: italic;
 }
 
 .title {
@@ -903,6 +913,15 @@ a:hover {
 
     .language-filters {
         display : none !important;
+    }
+
+    /* Blocs d'intro' de la liste */
+    .container {
+        display : none;
+    }
+
+    .container_mobile {
+        display : block !important;
     }
 
 
