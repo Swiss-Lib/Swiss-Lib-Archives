@@ -826,3 +826,19 @@ function restoreVisiblePosts() {
     }
 
 }
+
+//Pour le mobile
+window.addEventListener('pageshow', (event) => {
+
+    const isReturningFromPost =
+        sessionStorage.getItem(
+            'returningFromPost'
+        ) === 'true';
+
+    if (!isReturningFromPost && event.persisted) {
+
+        window.location.reload();
+
+    }
+
+});
