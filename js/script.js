@@ -828,30 +828,23 @@ function restoreVisiblePosts() {
 }
 
 //Pour le mobile
+window.addEventListener('online', () => {
+
+    alert('ONLINE');
+
+});
+
 document.addEventListener('visibilitychange', () => {
 
-    if (document.visibilityState === 'visible') {
+    alert(
+        'VISIBILITY : ' +
+        document.visibilityState
+    );
 
-        const timestamp =
-            sessionStorage.getItem(
-                'returnTimestamp'
-            );
+});
 
-        const isRecentReturn =
-            timestamp &&
-            (
-                Date.now() -
-                parseInt(timestamp, 10)
-            ) < 60000;
+window.addEventListener('focus', () => {
 
-        if (!isRecentReturn) {
-
-            clearStoredState();
-
-            window.location.reload();
-
-        }
-
-    }
+    alert('FOCUS');
 
 });
