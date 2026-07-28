@@ -830,24 +830,5 @@ function restoreVisiblePosts() {
 //Pour le mobile
 window.addEventListener('pageshow', () => {
 
-    const timestamp =
-        sessionStorage.getItem(
-            'returnTimestamp'
-        );
-
-    const isRecentReturn =
-        timestamp &&
-        (
-            Date.now() -
-            parseInt(timestamp, 10)
-        ) < 60000; // 1 minute
-
-    if (!isRecentReturn) {
-
-        clearStoredState();
-
-        location.reload();
-
-    }
 
 });
