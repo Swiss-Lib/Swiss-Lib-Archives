@@ -44,10 +44,7 @@ async function init() {
                 ${content}
             </div>
         `;
-        //Bouton retour
-        document.getElementById('backbutton2').innerHTML = `<a href="index.html" class="btn-retour">
-            ← Back to all posts
-        </a>`;
+
     });
 
     /* Flèche de retour en haut */
