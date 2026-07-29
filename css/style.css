@@ -870,7 +870,7 @@ a:hover {
 @media (max-width: 600px) {
 
     .title {
-        font-size : 0.9em;
+        font-size : 1rem;
         font-weight:bold;
     }
     .card {
