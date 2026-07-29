@@ -22,6 +22,10 @@ async function init() {
         //Traitement du titre pour enlever la première balise
         let title_post = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
         title_post = getDisplayTitle(title_post); //traiter les cas où le post est renommé
+        //Bouton retour
+        document.getElementById('backbutton').innerHTML = `<a href="index.html" class="btn-retour">
+            ← Back to all posts
+        </a>`;
         //Affichage du post
         document.getElementById('post-container').innerHTML = `
             <h1 id="titre_post">${title_post}</h1>
@@ -40,6 +44,10 @@ async function init() {
                 ${content}
             </div>
         `;
+        //Bouton retour
+        document.getElementById('backbutton2').innerHTML = `<a href="index.html" class="btn-retour">
+            ← Back to all posts
+        </a>`;
     });
 
     /* Flèche de retour en haut */
