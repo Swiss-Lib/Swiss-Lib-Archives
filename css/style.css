@@ -5,7 +5,7 @@
 
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     background: #f5f7fa;
     /*margin: 20px;*/
 }
@@ -46,13 +46,14 @@ table {
     background: #BBC1C8;           
     color: #5f7895;                
     text-align: center;
-    font-weight: 500;
+    font-weight: bold;;
     font-size : 1.5em;
     padding: 30px 20px;
     border-radius: 12px;
     margin-bottom: 30px;
     line-height: 1.4;
 }
+
 
 #title_archive::after {
     content: "";
@@ -868,6 +869,10 @@ a:hover {
 /* Responsive */
 @media (max-width: 600px) {
 
+    .title {
+        font-size : 1em;
+        font-weight:bold;
+    }
     .card {
         flex-direction: row;
         align-items: flex-start;
