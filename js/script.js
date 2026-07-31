@@ -121,7 +121,7 @@ async function loadArchives() {
             );
             //Synchronisation terminée
             const synchro_data = document.getElementById('synchro_data');
-            synchro_data.innerHTML = "";
+            synchro_data.style.display = 'none';
 
             return response.json();
 
