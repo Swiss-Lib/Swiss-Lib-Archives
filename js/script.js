@@ -113,12 +113,15 @@ async function loadArchives() {
     })
             .then(response => {
 
-console.timeEnd("HTTP");
+            console.timeEnd("HTTP");
 
-console.log(
-    "Fin API",
-    new Date().toLocaleTimeString()
-);
+            console.log(
+                "Fin API",
+                new Date().toLocaleTimeString()
+            );
+            //Synchronisation terminée
+            const synchro_data = document.getElementById('synchro_data');
+            synchro_data.innerHTML = "";
 
             return response.json();
 
