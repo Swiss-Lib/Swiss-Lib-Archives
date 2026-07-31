@@ -119,9 +119,6 @@ async function loadArchives() {
                 "Fin API",
                 new Date().toLocaleTimeString()
             );
-            //Synchronisation terminée
-            const synchro_data = document.getElementById('synchro_data');
-            synchro_data.style.display = 'none';
 
             return response.json();
 
@@ -148,6 +145,10 @@ async function loadArchives() {
                 "API",
                 data.archives[0].posts.length
             );
+            //Synchronisation terminée
+            const synchro_data = document.getElementById('synchro_data');
+            synchro_data.style.display = 'none';
+
             applyFilters();
         })
         .catch(error => {
