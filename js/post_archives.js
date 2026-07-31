@@ -67,6 +67,19 @@ async function init() {
 
     //Préparer le contenu HTML avant affichage
     function prepareContent(html) {
+        // Supprimer les marqueurs blocked::
+      //  html = html.replace(
+      //      /[^<\s]+&lt;blocked::(?=&lt;a)/gi,
+       //     ''
+      //  );
+       // html = html.replace(
+       //     /[\w.-]+\.[a-z]{2,}&lt;blocked::/gi,
+       //     ''
+       // );
+       // html = html.replace(
+      //      /(<\/a>)\s*&gt;/gi,
+      //      '$1'
+       // );
         //Gérer le contenu superflus
         html = additionalContent(html);
         // Enlever les << >> autour des liens
@@ -94,6 +107,25 @@ async function init() {
             '\n\n'
         );
 
+        //Gestion du gras
+        html = html.replace(
+            /\*([^\n*]+)\*/g,
+            '<strong>$1</strong>'
+        );
+
+        //Supprimer mailto identique
+        const matches = html.match(
+    /.{0,150}mailto:hr@tet\.com.{0,150}/gi
+);
+
+console.log(matches);
+console.log(
+    html.match(
+        /.{0,150}mailto:[^"]+.{0,150}/gi
+    )
+);
+
+console.log(html);
         return html;
     }
 

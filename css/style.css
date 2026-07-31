@@ -641,7 +641,7 @@ a:hover {
     overflow-wrap: break-word;
     word-wrap: break-word;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    line-height: 1.2; /* avant j'avais 1.6 */
+    line-height: 1.4; /* avant j'avais 1.6 */
 }
 
 
