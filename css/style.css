@@ -638,20 +638,21 @@ a:hover {
     padding: 20px;
     margin: 15px 0;
     white-space: pre-wrap;
-    
     overflow-wrap: break-word;
     word-wrap: break-word;
-
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    line-height: 1.6;
+    line-height: 1.2; /* avant j'avais 1.6 */
 }
+
 
 .card-message pre {
     margin: 0;
     white-space: pre-wrap; /* conserve les sauts de ligne */
     word-break: break-word;
     font-family: inherit; /* utilise la police du site */
+    text-justify: inter-word;
 }
+
 .card-message:hover {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
     transform: translateY(-2px);
@@ -872,6 +873,10 @@ a:hover {
     .title {
         font-size : 1rem;
         font-weight:bold;
+    }
+
+    #titre_post {
+        font-size : 1.2rem;
     }
     .card {
         flex-direction: row;

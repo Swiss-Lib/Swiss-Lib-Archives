@@ -19,6 +19,7 @@ async function init() {
         let email = post.author.replace(/\s+at\s+/i, '@').replace(/<[^>]*>/g, '').trim();
         //Contenu
         let content = prepareContent(post.content);
+
         //Traitement du titre pour enlever la première balise
         let title_post = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
         title_post = getDisplayTitle(title_post); //traiter les cas où le post est renommé
@@ -81,6 +82,17 @@ async function init() {
         html = fixMailtoLinks(html);
         //Ajout target blank
         html = addTargetBlank(html);
+
+        //Traitement des espaces en trop dans les listes à -
+        html = html.replace(
+            /^\s*-\s*\n+\s*/gm,
+            '- '
+        );
+        // Maximum 2 retours à la ligne consécutifs
+        html = html.replace(
+            /\n{3,}/g,
+            '\n\n'
+        );
 
         return html;
     }
