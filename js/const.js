@@ -34,7 +34,7 @@ const FILTERS = {
 
         formations: /(formation\s+continue|formation|formations|continuing\s+professional\s+development|weiterbildung|weiterbildungskurs|formazione\s+continua|competences|competencies|skills|kompetenzen|competenze)/i,
 
-        ressources: /(ressource|ressources|resource|ressourcen|risorsa|outil|tool|werkzeug|strumento|guide|leitfaden|guida|publication|publikation|pubblicazione|rapport|bericht|rapporto)/i,
+        ressources: /(ressource|ressources|resource|ressourcen|risorsa|outil|tool|werkzeug|strumento|guide|leitfaden|guida|publication|publikation|pubblicazione|rapport|bericht|rapporto|gratis abzugeben)/i,
 
         recherches: /(recherches?\s+et\s+contributions?|recherche|contribution|forschung|ricerca|appel|aufruf|chiamata|call|enquete|umfrage|sondaggio|survey|collaborat|projet|projekt|progetto|call(?:\s+of|\s+for)?\s+papers)/i,
 
@@ -62,11 +62,11 @@ const TAGS = {
     "offerta di lavoro": "emploi",
     "posto di lavoro": "emploi",
 
-
     // Événements
     "evenement": "evenements",
     "evenements": "evenements",
     "événement": "evenements",
+    "evènement": "evenements",
     "événements": "evenements",
     "veranstaltung": "evenements",
     "veranstaltungen": "evenements",

@@ -14,21 +14,29 @@ body {
 #logo {
     width: 100%;
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     text-align: center;
 }
 
 #logo img {
-    width: 30%;
+    width: 25%;
     height: auto;
-
+    max-width: 500px;
+    min-width: 300px;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
 
+/* Bandeau intro Swiss-Lib */
 
+#intro-header {
+    width : 60%;
+    font-size: 1rem;
+    padding: 10px 10px;
+    margin : auto;
+}
 
 /* TABLEAU */
 table {
@@ -871,6 +879,12 @@ a:hover {
 
 /* Responsive */
 @media (max-width: 600px) {
+
+        #intro-header {
+        width : 100%;
+        font-size: 1rem;
+        margin : auto;
+    }
 
     .title {
         font-size : 1rem;
