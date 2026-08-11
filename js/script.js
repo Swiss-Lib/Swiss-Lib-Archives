@@ -11,6 +11,8 @@ let currentCategory = 'all';
 let currentLanguage = 'all';
 let currentSearch = '';
 
+
+
 // Empêche le navigateur de restaurer lui-même le scroll
 if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
@@ -163,7 +165,8 @@ async function loadArchives() {
 //Préparer les posts
 
 function preparePosts(data) {
-    
+    //Les titres vus
+    const seenTitles = new Set();
     //Cacher les posts superflus
     data.archives.forEach(archive => {
 
@@ -186,6 +189,29 @@ function preparePosts(data) {
 
             if (rule?.rename) {
                 post.title = rule.rename;
+            }
+
+            //Détecter les réponses et les gérer
+            // Détection des doublons de titres
+            const normalizedTitle =
+                post.title
+                    .replace(/^RE\s*:\s*/i, '')
+                    .trim()
+                    .toLowerCase();
+
+            if (seenTitles.has(normalizedTitle)) {
+
+                if (!/^RE\s*:/i.test(post.title)) {
+
+                    post.title =
+                        'RE : ' + post.title;
+
+                }
+
+            } else {
+
+                seenTitles.add(normalizedTitle);
+
             }
 
             post.languages = getLanguages(post.title);
@@ -252,8 +278,7 @@ function renderArchives(data) {
             let idpost = post.url.replace(/\.html$/i, '');
             let safePostId = idpost.replaceAll('/', '-');
 
-            const url =
-                'post_archives.html?id=' + encodeURIComponent(post.url);
+            const url = 'post_archives.html?id=' + encodeURIComponent(post.url);
             //let title_post = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
    
             archiveHtml += `
