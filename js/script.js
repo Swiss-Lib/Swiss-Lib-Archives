@@ -358,6 +358,45 @@ function renderArchives(data) {
     }
 }
 
+let currentJobFilter = '';
+
+function filterJobs(value, button) {
+
+    // Stockage du filtre actif
+    currentJobFilter = value;
+
+    // Désélection de tous les boutons
+    document
+        .querySelectorAll('.specfic-filters button')
+        .forEach(btn => btn.classList.remove('active'));
+
+    button.classList.add('active');
+
+    // Relance des filtres
+    applyFilters();
+
+}
+
+//Rate
+let currentRateFilter = '';
+
+function filterRate(value, button) {
+
+    // Stockage du filtre actif
+    currentRateFilter = value;
+
+    // Désélection de tous les boutons
+    document
+        .querySelectorAll('.pourcentage-filters button')
+        .forEach(btn => btn.classList.remove('active'));
+
+    button.classList.add('active');
+
+    // Relance des filtres
+    applyFilters();
+
+}
+
 // Applique les filtres (catégories et langages) pour afficher les posts
 function applyFilters() {
 
@@ -380,7 +419,7 @@ function applyFilters() {
                         let score = 0;
 
                         const titleSearch =
-                            (post.title_search || '')
+                            (post.title || '')
                                 .toLowerCase();
 
                         const contentSearch =
@@ -457,7 +496,7 @@ function applyFilters() {
                                 .toLowerCase();
 
                         const matchJobFilter =
-                            jobValue === ''
+                            jobValue === 'all'
                             || (
                                 (post.title_search || '')
                                     .toLowerCase()
@@ -474,7 +513,7 @@ function applyFilters() {
                                 .toLowerCase();
 
                         const matchRateFilter =
-                            rateValue === ''
+                            rateValue === 'all'
                             || (
                                 (post.title_search || '')
                                     .toLowerCase()
@@ -524,7 +563,7 @@ function applyFilters() {
         window.innerWidth <= 600;
 
     if (currentCategory === 'emploi') {
-        console.log(employmentFiltersMobile);
+
         if (employmentFiltersDesktop) {
 
             employmentFiltersDesktop.style.display =
@@ -758,46 +797,6 @@ searchInput.addEventListener('input', () => {
 
 });
 
-//Jobs 
-
-let currentJobFilter = '';
-
-function filterJobs(value, button) {
-
-    // Stockage du filtre actif
-    currentJobFilter = value.toLowerCase();
-
-    // Désélection de tous les boutons
-    document
-        .querySelectorAll('.specific-filters button')
-        .forEach(btn => btn.classList.remove('active'));
-
-    button.classList.add('active');
-
-    // Relance des filtres
-    applyFilters();
-
-}
-
-//Rate
-let currentRateFilter = '';
-
-function filterRate(value, button) {
-
-    // Stockage du filtre actif
-    currentRateFilter = value.toLowerCase();
-
-    // Désélection de tous les boutons
-    document
-        .querySelectorAll('.pourcentage-filters button')
-        .forEach(btn => btn.classList.remove('active'));
-
-    button.classList.add('active');
-
-    // Relance des filtres
-    applyFilters();
-
-}
 
 /* Flèche de retour en haut */
 
@@ -853,7 +852,7 @@ function rememberPost(postId) {
         'currentSearch',
         currentSearch
     );
-
+    console.log(currentJobFilter);
     sessionStorage.setItem(
     'currentJobFilter',
     currentJobFilter
@@ -921,7 +920,7 @@ function restoreState() {
         (
             Date.now() -
             parseInt(timestamp, 10)
-        ) < 5 * 60 * 1000;
+        ) < 5 * 60 * 1000; // 5 minutes
 
     if (
         !isReturningFromPost ||
@@ -934,12 +933,9 @@ function restoreState() {
         currentCategory = 'all';
         currentLanguage = 'all';
         currentSearch = '';
-
         currentJobFilter = 'all';
         currentRateFilter = 'all';
-
-        resetFiltersUI();
-
+        resetFiltersUI()
         return;
 
     }
@@ -953,14 +949,11 @@ function restoreState() {
     if (savedVisiblePosts) {
 
         visiblePosts =
-            parseInt(
-                savedVisiblePosts,
-                10
-            );
+            parseInt(savedVisiblePosts, 10);
 
     }
 
-    // Filtres principaux
+    // Filtres
     currentCategory =
         sessionStorage.getItem(
             'currentCategory'
@@ -987,73 +980,51 @@ function restoreState() {
             'currentRateFilter'
         ) || 'all';
 
-    
     // --------------------
-    // Sous-filtres emploi
+    // Sous-filtres emploi display
     // --------------------
 
     const employmentFilters =
         document.getElementById(
-            'specific_category'
+            'specific-filters'
         );
 
     if (employmentFilters) {
 
         employmentFilters.style.display =
-            currentCategory === 'job'
+            currentCategory === 'emploi'
                 ? 'flex'
                 : 'none';
 
     }
 
-    // --------------------
     // Boutons catégories
-    // --------------------
-
     document
-        .querySelectorAll(
-            '.filters button'
-        )
+        .querySelectorAll('.filters button')
         .forEach(btn =>
-            btn.classList.remove(
-                'active'
-            )
+            btn.classList.remove('active')
         );
 
     document
         .querySelector(
             `.filters button[value="${currentCategory}"]`
         )
-        ?.classList.add(
-            'active'
-        );
+        ?.classList.add('active');
 
-    // --------------------
     // Boutons langues
-    // --------------------
-
     document
-        .querySelectorAll(
-            '.language-filters button'
-        )
+        .querySelectorAll('.language-filters button')
         .forEach(btn =>
-            btn.classList.remove(
-                'active'
-            )
+            btn.classList.remove('active')
         );
 
     document
         .querySelector(
             `.language-filters button[value="${currentLanguage}"]`
         )
-        ?.classList.add(
-            'active'
-        );
+        ?.classList.add('active');
 
-    // --------------------
     // Select mobile catégories
-    // --------------------
-
     const categorySelect =
         document.getElementById(
             'filters_select'
@@ -1066,10 +1037,7 @@ function restoreState() {
 
     }
 
-    // --------------------
     // Select mobile langues
-    // --------------------
-
     const languageSelect =
         document.getElementById(
             'languages_select'
@@ -1081,36 +1049,31 @@ function restoreState() {
             currentLanguage;
 
     }
+    // Select mobile contrats
+        const jobSelect =
+            document.getElementById(
+                'jobs-select'
+            );
 
-// Select mobile contrats
-const jobSelect =
-    document.getElementById(
-        'jobs-select'
-    );
+        if (jobSelect) {
 
-if (jobSelect) {
+            jobSelect.value =
+                currentJobFilter;
 
-    jobSelect.value =
-        currentJobFilter;
+        }
 
-}
+        // Select mobile pourcentages
+        const rateSelect =
+            document.getElementById(
+                'rate-select'
+            );
 
-// Select mobile pourcentages
-const rateSelect =
-    document.getElementById(
-        'rate-select'
-    );
+        if (rateSelect) {
 
-if (rateSelect) {
-
-    rateSelect.value =
-        currentRateFilter;
-
-}
-    // --------------------
+            rateSelect.value =
+                currentRateFilter;
+        }
     // Recherche
-    // --------------------
-
     const searchInput =
         document.getElementById(
             'search-category'
@@ -1122,19 +1085,17 @@ if (rateSelect) {
             currentSearch;
 
     }
-
-
 // Contrats
 
 document
-    .querySelectorAll('.specific-filters')
+    .querySelectorAll('.specfic_category')
     .forEach(btn =>
         btn.classList.remove('active')
     );
 
 const activeJobFilter =
     document.querySelector(
-        `.specific-filters[value="${currentJobFilter}"]`
+        `.specfic_category button[value="${currentJobFilter}"]`
     );
 
 if (activeJobFilter) {
@@ -1174,12 +1135,13 @@ if (activeRateFilter) {
         currentCategory !== 'emploi'
     ) {
 
-        currentJobFilter = '';
-        currentRateFilter = '';
+        currentJobFilter = 'all';
+        currentRateFilter = 'all';
 
     }
 
 }
+
 
 //Remet à zéro toutes les variables du cache
 function clearStoredState() {
@@ -1212,7 +1174,7 @@ function clearStoredState() {
         'currentSearch'
     );
 
-    sessionStorage.removeItem(
+        sessionStorage.removeItem(
         'currentJobFilter'
     );
 
