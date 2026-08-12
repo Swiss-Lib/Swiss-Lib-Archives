@@ -91,10 +91,6 @@ async function loadArchives() {
 
             /*restoreVisiblePosts()*/
             applyFilters();
-            //Synchronisation terminée
-            const synchro_data = document.getElementById('synchro_data');
-            synchro_data.style.display = 'none';
-            console.log("MASQUAGE SPINNER cache");
 
         } catch(e) {
             console.error(e);
