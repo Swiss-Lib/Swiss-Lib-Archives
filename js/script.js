@@ -287,7 +287,6 @@ function renderArchives(data) {
             displayedPosts++;
             let idpost = post.url.replace(/\.html$/i, '');
             let safePostId = idpost.replaceAll('/', '-');
-
             const url = 'post_archives.html?id=' + encodeURIComponent(post.url);
             //let title_post = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
    
@@ -360,59 +359,135 @@ function renderArchives(data) {
 }
 
 // Applique les filtres (catégories et langages) pour afficher les posts
-
 function applyFilters() {
+
+    const query =
+        currentSearch
+            .trim()
+            .toLowerCase();
 
     const filteredData = {
         success: true,
+
         archives: archivesData.archives
             .map(archive => ({
+
                 ...archive,
-                posts: archive.posts.filter(post => {
-                    // Prends en compte les filtres et l'état de la recherche
-                    const matchCategory =
-                        currentCategory === 'all'
-                        || post.category === currentCategory;
 
-                    const matchLanguage =
-                        currentLanguage === 'all'
-                        || (
-                            post.languages &&
-                            post.languages.includes(currentLanguage)
+                posts: archive.posts
+                    .map(post => {
+
+                        let score = 0;
+
+                        const titleSearch =
+                            (post.search || '')
+                                .toLowerCase();
+
+                        const contentSearch =
+                            (post.content_search || '')
+                                .toLowerCase();
+
+                        // Titre / auteur
+                        if (
+                            query !== '' &&
+                            titleSearch.includes(query)
+                        ) {
+
+                            score += 100;
+
+                        }
+
+                        // Contenu
+                        if (
+                            query !== '' &&
+                            contentSearch
+                        ) {
+
+                            const safeQuery =
+                                query.replace(
+                                    /[.*+?^${}()|[\]\\]/g,
+                                    '\\$&'
+                                );
+
+                            const occurrences =
+                                (
+                                    contentSearch.match(
+                                        new RegExp(
+                                            safeQuery,
+                                            'gi'
+                                        )
+                                    ) || []
+                                ).length;
+
+                            // 1 occurrence suffit
+                            if (occurrences > 0) {
+
+                                score += occurrences * 10;
+
+                            }
+
+                        }
+
+                        return {
+                            ...post,
+                            _searchScore: score
+                        };
+
+                    })
+                    .filter(post => {
+
+                        const matchCategory =
+                            currentCategory === 'all'
+                            || post.category === currentCategory;
+
+                        const matchLanguage =
+                            currentLanguage === 'all'
+                            || (
+                                post.languages &&
+                                post.languages.includes(
+                                    currentLanguage
+                                )
+                            );
+
+                        const matchSearch =
+                            query === ''
+                            || post._searchScore > 0;
+
+                        return (
+                            matchCategory &&
+                            matchLanguage &&
+                            matchSearch
                         );
 
-                    const matchSearch =
-                        currentSearch === ''
-                        || (
-                            (post.title + ' ' + post.author)
-                                .toLowerCase()
-                                .includes(currentSearch)
-                        );
+                    })
+                    .sort(
+                        (a, b) =>
+                            b._searchScore
+                            - a._searchScore
+                    )
 
-                    return (
-                        matchCategory &&
-                        matchLanguage &&
-                        matchSearch
-                    );
-                })
             }))
-            .filter(archive => archive.posts.length > 0)
+            .filter(
+                archive =>
+                    archive.posts.length > 0
+            )
     };
 
     renderArchives(filteredData);
-    
-    //Apparition du bouton "voir plus" seulement quand il y'a assez de posts à réafficher
+
     const loadMoreBtn =
-        document.getElementById('load-more-btn');
+        document.getElementById(
+            'load-more-btn'
+        );
 
-    const hasActiveFilters =
-        currentCategory !== 'all'
-        || currentLanguage !== 'all'
-        || currentSearch !== '';
+    if (loadMoreBtn) {
 
-        if (loadMoreBtn) {
-            updateLoadMoreButton(filteredData);
-        }
+        updateLoadMoreButton(
+            filteredData
+        );
+
+    }
+
 }
 
 //

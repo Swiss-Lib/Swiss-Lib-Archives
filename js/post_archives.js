@@ -5,10 +5,13 @@ async function init() {
 
     const params = new URLSearchParams(window.location.search);
 
-    const id = new URLSearchParams(location.search)
+    let id = new URLSearchParams(location.search)
         .get('id');
 
-    //Récupérer le post
+    id = id.replace(/\.html$/i, '');
+
+    console.log(id);
+
     fetch(
     `https://archive-swisslib.deepmining.ch/post_archives.php?id=${encodeURIComponent(id)}`
     )
