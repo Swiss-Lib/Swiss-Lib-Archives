@@ -166,6 +166,62 @@
                     </select>
                 </div>
 
+                <div id="specfic_category" style="display:none;">
+                    <h3 class="filter-title">Type</h3>
+                    <div class="specific-filters">
+                        <button class="active" value="all" onclick="filterPosts('cdd', this)">
+                            <span class="badge emploi"></span> Tous / Alle / Tutto
+                        </button>
+                        <button value="CDD" onclick="filterJobs('CDD', this)">
+                            <span class="badge emploi"></span> CDD
+                        </button>
+                        <button value="CDI" onclick="filterJobs('CDI', this)">
+                            <span class="badge emploi"></span> CDI
+                        </button>
+                         <button value="stage" onclick="filterJobs('Stage', this)">
+                            <span class="badge emploi"></span> Stage
+                        </button>
+                    </div>
+                    <h3 class="filter-title">Rate</h3>
+                    <div class="pourcentage-filters">
+                        <button class="active" value="all" onclick="filterRate('cdd', this)">
+                            <span class="badge emploi"></span> Tous / Alle / Tutto
+                        </button>
+                        <button value="100" onclick="filterRate('100%', this)">
+                            <span class="badge emploi"></span> 100%
+                        </button>
+                        <button value="80" onclick="filterRate('80%', this)">
+                            <span class="badge emploi"></span> 80%
+                        </button>
+                        <button value="50" onclick="filterRate('50%', this)">
+                            <span class="badge emploi"></span> 50%
+                        </button>
+                    </div>
+                </div>
+                <!-- Mobile -->
+                <div id="specific_category-mobile" style="display:none;">   
+                  <div class="mobile-select">
+                    <h3 class="filter-title">Type</h3>
+                    <select id="jobs-select"
+                            onchange="filterJobs(this.value, this)">
+                        <option class="active" value="all">Tous / Alle / Tutto</option>
+                        <option value="CDD">CDD</option>
+                        <option value="CDI">CDI</option>
+                        <option value="Stage">Stage</option>
+                    </select>
+                </div>
+                <div class="mobile-select">
+                    <h3 class="filter-title">Rate</h3>
+                    <select id="rate-select"
+                            onchange="filterRate(this.value, this)">
+                        <option class="active" value="all">Tous / Alle / Tutto</option>
+                        <option value="fr">100%</option>
+                        <option value="de">80%</option>
+                        <option value="it">50%</option>
+                    </select>
+                </div>
+                </div>
+
                 <h3 class="filter-title">Language</h3>
                 <div class="language-filters">
                     <button value="all" class="active" onclick="filterLanguage('all', this)">

@@ -380,14 +380,14 @@ function applyFilters() {
                         let score = 0;
 
                         const titleSearch =
-                            (post.search || '')
+                            (post.title_search || '')
                                 .toLowerCase();
 
                         const contentSearch =
                             (post.content_search || '')
                                 .toLowerCase();
 
-                        // Titre / auteur
+                        // Recherche principale
                         if (
                             query !== '' &&
                             titleSearch.includes(query)
@@ -397,7 +397,6 @@ function applyFilters() {
 
                         }
 
-                        // Contenu
                         if (
                             query !== '' &&
                             contentSearch
@@ -419,10 +418,10 @@ function applyFilters() {
                                     ) || []
                                 ).length;
 
-                            // 1 occurrence suffit
                             if (occurrences > 0) {
 
-                                score += occurrences * 10;
+                                score +=
+                                    occurrences * 10;
 
                             }
 
@@ -453,10 +452,46 @@ function applyFilters() {
                             query === ''
                             || post._searchScore > 0;
 
+                        const jobValue =
+                            (currentJobFilter || '')
+                                .toLowerCase();
+
+                        const matchJobFilter =
+                            jobValue === ''
+                            || (
+                                (post.title_search || '')
+                                    .toLowerCase()
+                                    .includes(jobValue)
+                            )
+                            || (
+                                (post.content_search || '')
+                                    .toLowerCase()
+                                    .includes(jobValue)
+                            );
+
+                        const rateValue =
+                            (currentRateFilter || '')
+                                .toLowerCase();
+
+                        const matchRateFilter =
+                            rateValue === ''
+                            || (
+                                (post.title_search || '')
+                                    .toLowerCase()
+                                    .includes(rateValue)
+                            )
+                            || (
+                                (post.content_search || '')
+                                    .toLowerCase()
+                                    .includes(rateValue)
+                            );
+
                         return (
-                            matchCategory &&
-                            matchLanguage &&
-                            matchSearch
+                            matchCategory
+                            && matchLanguage
+                            && matchSearch
+                            && matchJobFilter
+                            && matchRateFilter
                         );
 
                     })
@@ -474,7 +509,58 @@ function applyFilters() {
     };
 
     renderArchives(filteredData);
+    //Faire aparaître les sous-filtres si on est dans emploi
+    const employmentFiltersDesktop =
+        document.getElementById(
+            'specfic_category'
+        );
 
+    const employmentFiltersMobile =
+        document.getElementById(
+            'specific_category-mobile'
+        );
+
+    const isMobile =
+        window.innerWidth <= 600;
+
+    if (currentCategory === 'emploi') {
+        console.log(employmentFiltersMobile);
+        if (employmentFiltersDesktop) {
+
+            employmentFiltersDesktop.style.display =
+                isMobile
+                    ? 'none'
+                    : 'flex';
+
+        }
+
+        if (employmentFiltersMobile) {
+
+            employmentFiltersMobile.style.display =
+                isMobile
+                    ? 'block'
+                    : 'none';
+
+        }
+
+    } else {
+
+        if (employmentFiltersDesktop) {
+
+            employmentFiltersDesktop.style.display =
+                'none';
+
+        }
+
+        if (employmentFiltersMobile) {
+
+            employmentFiltersMobile.style.display =
+                'none';
+
+        }
+
+}
+    // LoadMoreBTN
     const loadMoreBtn =
         document.getElementById(
             'load-more-btn'
@@ -672,6 +758,46 @@ searchInput.addEventListener('input', () => {
 
 });
 
+//Jobs 
+
+let currentJobFilter = '';
+
+function filterJobs(value, button) {
+
+    // Stockage du filtre actif
+    currentJobFilter = value.toLowerCase();
+
+    // Désélection de tous les boutons
+    document
+        .querySelectorAll('.specific-filters button')
+        .forEach(btn => btn.classList.remove('active'));
+
+    button.classList.add('active');
+
+    // Relance des filtres
+    applyFilters();
+
+}
+
+//Rate
+let currentRateFilter = '';
+
+function filterRate(value, button) {
+
+    // Stockage du filtre actif
+    currentRateFilter = value.toLowerCase();
+
+    // Désélection de tous les boutons
+    document
+        .querySelectorAll('.pourcentage-filters button')
+        .forEach(btn => btn.classList.remove('active'));
+
+    button.classList.add('active');
+
+    // Relance des filtres
+    applyFilters();
+
+}
 
 /* Flèche de retour en haut */
 
@@ -727,6 +853,16 @@ function rememberPost(postId) {
         'currentSearch',
         currentSearch
     );
+
+    sessionStorage.setItem(
+    'currentJobFilter',
+    currentJobFilter
+    );
+
+    sessionStorage.setItem(
+        'currentRateFilter',
+        currentRateFilter
+    );
 }
 
 //Restaurer le scroll sur la page
@@ -761,6 +897,8 @@ function restoreLastPostPosition() {
         sessionStorage.removeItem('currentCategory');
         sessionStorage.removeItem('currentLanguage');
         sessionStorage.removeItem('currentSearch');
+        sessionStorage.removeItem('currentRateFilter');
+        sessionStorage.removeItem('currentJobFilter');
 
     }, 200);
 }
@@ -783,7 +921,7 @@ function restoreState() {
         (
             Date.now() -
             parseInt(timestamp, 10)
-        ) < 5 * 60 * 1000; // 5 minutes
+        ) < 5 * 60 * 1000;
 
     if (
         !isReturningFromPost ||
@@ -796,7 +934,12 @@ function restoreState() {
         currentCategory = 'all';
         currentLanguage = 'all';
         currentSearch = '';
-        resetFiltersUI()
+
+        currentJobFilter = 'all';
+        currentRateFilter = 'all';
+
+        resetFiltersUI();
+
         return;
 
     }
@@ -810,11 +953,14 @@ function restoreState() {
     if (savedVisiblePosts) {
 
         visiblePosts =
-            parseInt(savedVisiblePosts, 10);
+            parseInt(
+                savedVisiblePosts,
+                10
+            );
 
     }
 
-    // Filtres
+    // Filtres principaux
     currentCategory =
         sessionStorage.getItem(
             'currentCategory'
@@ -830,33 +976,84 @@ function restoreState() {
             'currentSearch'
         ) || '';
 
+    // Sous-filtres emploi
+    currentJobFilter =
+        sessionStorage.getItem(
+            'currentJobFilter'
+        ) || 'all';
+
+    currentRateFilter =
+        sessionStorage.getItem(
+            'currentRateFilter'
+        ) || 'all';
+
+    
+    // --------------------
+    // Sous-filtres emploi
+    // --------------------
+
+    const employmentFilters =
+        document.getElementById(
+            'specific_category'
+        );
+
+    if (employmentFilters) {
+
+        employmentFilters.style.display =
+            currentCategory === 'job'
+                ? 'flex'
+                : 'none';
+
+    }
+
+    // --------------------
     // Boutons catégories
+    // --------------------
+
     document
-        .querySelectorAll('.filters button')
+        .querySelectorAll(
+            '.filters button'
+        )
         .forEach(btn =>
-            btn.classList.remove('active')
+            btn.classList.remove(
+                'active'
+            )
         );
 
     document
         .querySelector(
             `.filters button[value="${currentCategory}"]`
         )
-        ?.classList.add('active');
+        ?.classList.add(
+            'active'
+        );
 
+    // --------------------
     // Boutons langues
+    // --------------------
+
     document
-        .querySelectorAll('.language-filters button')
+        .querySelectorAll(
+            '.language-filters button'
+        )
         .forEach(btn =>
-            btn.classList.remove('active')
+            btn.classList.remove(
+                'active'
+            )
         );
 
     document
         .querySelector(
             `.language-filters button[value="${currentLanguage}"]`
         )
-        ?.classList.add('active');
+        ?.classList.add(
+            'active'
+        );
 
+    // --------------------
     // Select mobile catégories
+    // --------------------
+
     const categorySelect =
         document.getElementById(
             'filters_select'
@@ -869,7 +1066,10 @@ function restoreState() {
 
     }
 
+    // --------------------
     // Select mobile langues
+    // --------------------
+
     const languageSelect =
         document.getElementById(
             'languages_select'
@@ -882,7 +1082,35 @@ function restoreState() {
 
     }
 
+// Select mobile contrats
+const jobSelect =
+    document.getElementById(
+        'jobs-select'
+    );
+
+if (jobSelect) {
+
+    jobSelect.value =
+        currentJobFilter;
+
+}
+
+// Select mobile pourcentages
+const rateSelect =
+    document.getElementById(
+        'rate-select'
+    );
+
+if (rateSelect) {
+
+    rateSelect.value =
+        currentRateFilter;
+
+}
+    // --------------------
     // Recherche
+    // --------------------
+
     const searchInput =
         document.getElementById(
             'search-category'
@@ -892,6 +1120,62 @@ function restoreState() {
 
         searchInput.value =
             currentSearch;
+
+    }
+
+
+// Contrats
+
+document
+    .querySelectorAll('.specific-filters')
+    .forEach(btn =>
+        btn.classList.remove('active')
+    );
+
+const activeJobFilter =
+    document.querySelector(
+        `.specific-filters[value="${currentJobFilter}"]`
+    );
+
+if (activeJobFilter) {
+
+    activeJobFilter.classList.add(
+        'active'
+    );
+
+}
+
+// Pourcentages
+
+document
+    .querySelectorAll('.pourcentage-filters')
+    .forEach(btn =>
+        btn.classList.remove('active')
+    );
+
+const activeRateFilter =
+    document.querySelector(
+        `.pourcentage-filters[value="${currentRateFilter}"]`
+    );
+
+if (activeRateFilter) {
+
+    activeRateFilter.classList.add(
+        'active'
+    );
+
+}
+
+    // --------------------
+    // Sécurité si on n'est pas dans Emploi
+    // --------------------
+
+    if (
+        currentCategory !== 'emploi'
+    ) {
+
+        currentJobFilter = '';
+        currentRateFilter = '';
 
     }
 
@@ -926,6 +1210,14 @@ function clearStoredState() {
 
     sessionStorage.removeItem(
         'currentSearch'
+    );
+
+    sessionStorage.removeItem(
+        'currentJobFilter'
+    );
+
+    sessionStorage.removeItem(
+        'currentRateFilter'
     );
 
 }

@@ -434,7 +434,111 @@ a:hover {
 
 }
 
+/* Boutons des sous-filtres */
 
+.specific-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 18px;
+    font-size: 0.55rem;
+}
+
+.specific-filters button {
+    padding: 10px 18px;
+    border: 1px solid rgba(23, 32, 43, 0.1);
+    border-radius: 999px;
+
+    background: #ffffff;
+    color: #333b44;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    box-shadow: 0 2px 8px rgba(23,32,43,0.04);
+}
+
+.specific-filters button:hover {
+    background: #FFF0D0;
+    border-color: #e7d6ae;
+    transform: translateY(-1px);
+}
+
+.specific-filters button.active {
+    background: #2a5bd7;
+    color: white;
+    border-color: #2a5bd7;
+}
+
+.specific-filters button:active {
+    transform: translateY(0);
+}
+
+/* Class bouton actif */
+
+.specific-filters button.active {
+    background: #0078d4;
+    color: white;
+}
+ /* Pourcentages */
+
+.pourcentage-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 18px;
+    font-size: 0.95rem;
+}
+
+
+.pourcentage-filters button {
+    padding: 10px 18px;
+    border: 1px solid rgba(23, 32, 43, 0.1);
+    border-radius: 999px;
+
+    background: #ffffff;
+    color: #333b44;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    box-shadow: 0 2px 8px rgba(23,32,43,0.04);
+}
+
+.pourcentage-filters button:hover {
+    background: #FFF0D0;
+    border-color: #e7d6ae;
+    transform: translateY(-1px);
+}
+
+.pourcentage-filters button.active {
+    background: #2a5bd7;
+    color: white;
+    border-color: #2a5bd7;
+}
+
+.pourcentage-filters button:active {
+    transform: translateY(0);
+}
+
+/* Class bouton actif */
+
+.pourcentage-filters button.active {
+    background: #0078d4;
+    color: white;
+}
 /* Boutons des filtres */
 
 .language-filters {
@@ -949,7 +1053,5 @@ a:hover {
     .container_mobile {
         display : block !important;
     }
-
-
 }
 
