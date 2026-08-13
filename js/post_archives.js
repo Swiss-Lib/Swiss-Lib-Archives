@@ -1,4 +1,5 @@
 //Code principal
+let origin = "";
 async function init() {
     //Règles de posts : utile pour les titres qui ont été renommé
     await loadPostRules();
@@ -7,7 +8,7 @@ async function init() {
 
     let id = new URLSearchParams(location.search)
         .get('id');
-
+    origin = "https://listserv.linguistlist.org/pipermail/swiss-lib/" + id;
     id = id.replace(/\.html$/i, '');
 
     console.log(id);
@@ -26,6 +27,7 @@ async function init() {
         //Traitement du titre pour enlever la première balise
         let title_post = post.title.replace(/^\[Swiss-Lib\]\s*/, "");
         title_post = getDisplayTitle(title_post); //traiter les cas où le post est renommé
+        document.title = document.title + "  - " + title_post;
         //Bouton retour
         document.getElementById('backbutton').innerHTML = `<a href="index.html" class="btn-retour">
             ← Back to all posts
@@ -33,6 +35,7 @@ async function init() {
         //Affichage du post
         document.getElementById('post-container').innerHTML = `
             <h1 id="titre_post">${title_post}</h1>
+
             <div class="message-meta">         
                 <div>
                     <span class="label">👤 Auteur :</span>
@@ -46,6 +49,7 @@ async function init() {
 
             <div class="card-message">
                 ${content}
+                <a id="origin_post" href="${origin}" target="_blank">View the original post...</a>
             </div>
         `;
 
@@ -120,15 +124,6 @@ async function init() {
         const matches = html.match(
     /.{0,150}mailto:hr@tet\.com.{0,150}/gi
 );
-
-console.log(matches);
-console.log(
-    html.match(
-        /.{0,150}mailto:[^"]+.{0,150}/gi
-    )
-);
-
-console.log(html);
         return html;
     }
 

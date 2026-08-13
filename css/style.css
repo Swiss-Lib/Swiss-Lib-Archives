@@ -762,10 +762,26 @@ a:hover {
 
 .card-message pre {
     margin: 0;
+    padding : 0;
     white-space: pre-wrap; /* conserve les sauts de ligne */
     word-break: break-word;
     font-family: inherit; /* utilise la police du site */
     text-justify: inter-word;
+}
+
+#origin_post {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #7a8899;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+#origin_post:hover {
+    color: #5f6f86;
+    text-decoration: underline;
 }
 
 .card-message:hover {
@@ -981,8 +997,6 @@ a:hover {
     75%  { content: "..."; }
     100% { content: ""; }
 }
-
-
 
 /* Responsive */
 @media (max-width: 600px) {

@@ -53,6 +53,62 @@
       "_comment": "[Swiss-Lib] Reminder: AGIK - 25. August: Asynchrone IK-Vermittlung / 25 août : Enseignement asynchrone des CI",
       "category": "evenements"
     },
+    "Week-of-Mon-20260706/000071": {
+      "_comment": "[Swiss-Lib] Wissenschaftlicher Umgang mit geschriebenen und gesprochenen Sprachdaten",
+      "category": "formations"
+    },
+    "Week-of-Mon-20260706/000069": {
+      "_comment": "[Swiss-Lib] Direttore/direttrice Nati per leggere",
+      "category": "emploi"
+    },
+    "Week-of-Mon-20260706/000068": {
+      "_comment": "[Swiss-Lib] Directeur·rice Né pour lire",
+      "category": "emploi"
+    },
+    "Week-of-Mon-20260706/000067": {
+      "_comment": "[Swiss-Lib] Geschäftsleiter:in Buchstart gesucht",
+      "category": "emploi"
+    },
+    "Week-of-Mon-20260629/000053": {
+      "_comment": "[Swiss-Lib] Journals abzugeben",
+      "category": "ressources"
+    },
+    "Week-of-Mon-20260518/000008": {
+      "_comment": "[Swiss-Lib] Zeitschriften und Nachschlagewerke abzugeben (Fotografie und Kunst)",
+      "category": "ressources"
+    },
+    "Week-of-Mon-20260629/000048": {
+      "_comment": "[Swiss-Lib] Berner Bibliothekstag: letzte frei Plätze!",
+      "category": "evenements"
+    },
+    "Week-of-Mon-20260629/000047": {
+      "_comment": "[Swiss-Lib] Journée des bibliothèques bernoises : dernières places disponibles !",
+      "category": "evenements"
+    },
+    "Week-of-Mon-20260629/000046": {
+      "_comment": "[Swiss-Lib] Anmeldung + Programm: Herbstfortbildung 2026 der AKMB in Wien",
+      "category": "evenements"
+    },
+    "Week-of-Mon-20260615/000035": {
+      "_comment": "[Swiss-Lib] Tribunal fédéral: Chef/fe de la bibliothèque / Bundesgericht: Leiter/-in der Bibliothek",
+      "category": "emploi"
+    },
+    "Week-of-Mon-20260608/000028": {
+      "_comment": "[Swiss-Lib] Der TWSE ist auf dem neuesten Stand - Le TWSE est à jour",
+      "category": "communaute"
+    },
+    "Week-of-Mon-20260525/000009": {
+      "_comment": "[Swiss-Lib] Book bans aux États-Unis",
+      "category": "communaute"
+    },
+    "Week-of-Mon-20260525/000014": {
+      "_comment": "RE : [Swiss-Lib] Book bans aux États-Unis",
+      "category": "communaute"
+    },
+    "Week-of-Mon-20260525/000013": {
+      "_comment": "RE : [Swiss-Lib] Book bans aux États-Unis",
+      "category": "communaute"
+    },
     "Week-of-Mon-20260713/000086": {
       "_comment": "[Swiss-Lib] Swiss-Lib post from laura.kindler at hesav.ch requires approval",
       "rename": "[Emploi] Bibliothécaire scientifique HESAV"
@@ -60,6 +116,10 @@
     "Week-of-Mon-20260713/000087": {
       "_comment": "WG: Swiss-Lib post from ainhoa.gysi at srf.ch requires approval",
       "rename": "[Arbeit] Mediendokumentalist : in Musik 80%"
+    },
+      "Week-of-Mon-20260629/000056": {
+      "_comment": "[Swiss-Lib] Bitte um Registrierung",
+      "rename": "[Arbeit] Buchbinder*in (60 %) - Zentralbibliothek Zürich"
     }
   }
 }
