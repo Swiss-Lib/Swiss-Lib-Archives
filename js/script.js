@@ -367,7 +367,7 @@ function filterJobs(value, button) {
 
     // Désélection de tous les boutons
     document
-        .querySelectorAll('.specfic-filters button')
+        .querySelectorAll('.specific-filters button')
         .forEach(btn => btn.classList.remove('active'));
 
     button.classList.add('active');
@@ -417,9 +417,9 @@ function applyFilters() {
                     .map(post => {
 
                         let score = 0;
-
+                        //Mettre post.title s'il y'a des soucis pour les nouveaux posts
                         const titleSearch =
-                            (post.title || '')
+                            (post.titleSearch || '')
                                 .toLowerCase();
 
                         const contentSearch =
@@ -631,7 +631,7 @@ function filterPosts(filter, button_object) {
     visiblePosts = postsPerPage;
 
     currentCategory = filter;
-
+    console.log(currentCategory);
     applyFilters();
 }
 
@@ -852,7 +852,7 @@ function rememberPost(postId) {
         'currentSearch',
         currentSearch
     );
-    console.log(currentJobFilter);
+
     sessionStorage.setItem(
     'currentJobFilter',
     currentJobFilter
@@ -886,6 +886,8 @@ function restoreLastPostPosition() {
     postElement.scrollIntoView({
         block: 'center'
     });
+
+    console.log(currentCategory);
 
     // Nettoyage
     setTimeout(() => {
@@ -1088,15 +1090,17 @@ function restoreState() {
 // Contrats
 
 document
-    .querySelectorAll('.specfic_category')
+    .querySelectorAll('.specific-filters button')
     .forEach(btn =>
         btn.classList.remove('active')
     );
 
 const activeJobFilter =
     document.querySelector(
-        `.specfic_category button[value="${currentJobFilter}"]`
+        `.specific-filters button[value="${currentJobFilter}"]`
     );
+
+    console.log(activeJobFilter);
 
 if (activeJobFilter) {
 
@@ -1109,14 +1113,14 @@ if (activeJobFilter) {
 // Pourcentages
 
 document
-    .querySelectorAll('.pourcentage-filters')
+    .querySelectorAll('.pourcentage-filters button')
     .forEach(btn =>
         btn.classList.remove('active')
     );
 
 const activeRateFilter =
     document.querySelector(
-        `.pourcentage-filters[value="${currentRateFilter}"]`
+        `.pourcentage-filters button[value="${currentRateFilter}"]`
     );
 
 if (activeRateFilter) {

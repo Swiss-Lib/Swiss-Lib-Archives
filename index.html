@@ -113,46 +113,10 @@
             <div id="search-panel">
                 <h3 class="filter-title">Category</h3>
                 <!-- Filtres -->
-                <div class="filters">
-                    <button value="all" id="all" class="active" onclick="filterPosts('all', this)">
-                        <span class="badge all"></span>  Tous / Alle / Tutto
-                    </button>
-
-                    <button value="emploi" onclick="filterPosts('emploi', this)">
-                       <span class="badge emploi"></span> Emploi / Arbeit / Lavoro
-                    </button>
-
-                    <button value="evenements" onclick="filterPosts('evenements', this)">
-                         <span class="badge evenements"></span> Événements / Veranstaltungen / Eventi
-                    </button>
-
-                    <button value="communaute" onclick="filterPosts('communaute', this)">
-                        <span class="badge communaute"></span> Communauté / Gemeinschaft / Comunita
-                    </button>
-
-                    <button value="formations" onclick="filterPosts('formations', this)">
-                        <span class="badge formations"></span> Formations / Weiterbildung / Formazione
-                    </button>
-
-                    <button value="ressources" onclick="filterPosts('ressources', this)">
-                        <span class="badge ressources"></span> Ressources / Ressourcen / Risorse
-                    </button>
-
-                    <button value="recherches" onclick="filterPosts('recherches', this)">
-                        <span class="badge recherches"></span> Recherches / Forschung / Ricerche
-                    </button>
-
-                    <button value="newsletter" onclick="filterPosts('newsletter', this)">
-                        <span class="badge newsletter"></span> Newsletter
-                    </button>
-                    <button value="autre" onclick="filterPosts('autre', this)">
-                        <span class="badge autre"></span> Non-catégorisé / Nicht kategorisiert / Non classificato
-                    </button>
-                </div>
 
                 <!-- Mobile -->
                  
-                <div class="mobile-select">
+                <div id="desktop_filters" class="mobile-select">
                     <select id="filters_select" onchange="filterPosts(this.value, this)">
                         <option class="active" value="all">⬜ Tous / Alle / Tutto</option>
                         <option value="emploi">🟩 Emploi / Arbeit / Lavoro</option>
@@ -178,7 +142,7 @@
                         <button value="CDI" onclick="filterJobs('CDI', this)">
                             <span class="badge emploi"></span> CDI
                         </button>
-                         <button value="stage" onclick="filterJobs('Stage', this)">
+                         <button value="Stage" onclick="filterJobs('Stage', this)">
                             <span class="badge emploi"></span> Stage
                         </button>
                     </div>
@@ -187,13 +151,13 @@
                         <button class="active" value="all" onclick="filterRate('all', this)">
                             <span class="badge emploi"></span> Tous / Alle / Tutto
                         </button>
-                        <button value="100" onclick="filterRate('100%', this)">
+                        <button value="100%" onclick="filterRate('100%', this)">
                             <span class="badge emploi"></span> 100%
                         </button>
-                        <button value="80" onclick="filterRate('80%', this)">
+                        <button value="80%" onclick="filterRate('80%', this)">
                             <span class="badge emploi"></span> 80%
                         </button>
-                        <button value="50" onclick="filterRate('50%', this)">
+                        <button value="50%" onclick="filterRate('50%', this)">
                             <span class="badge emploi"></span> 50%
                         </button>
                     </div>
@@ -215,9 +179,9 @@
                     <select id="rate-select"
                             onchange="filterRate(this.value, this)">
                         <option class="active" value="all">Tous / Alle / Tutto</option>
-                        <option value="fr">100%</option>
-                        <option value="de">80%</option>
-                        <option value="it">50%</option>
+                        <option value="100%">100%</option>
+                        <option value="80%">80%</option>
+                        <option value="50%">50%</option>
                     </select>
                 </div>
                 </div>
