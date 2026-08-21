@@ -28,7 +28,7 @@ const FILTERS = {
 
         emploi: /(annonce|%|emploi|stage|apprentissage|pre.stage|pré.stage|hes|cdi|cdd|demande.emploi|spontan|arbeit|praktikum|lehrstelle|fh.vorpraktikum|vorpraktikum|unbefristet|befristet|einstellung|spontanbewerbung|lavoro|apprendistato|tirocinio|pre.tirocinio|sup|cti|ctd|candidatura|vacancy|hiring|recruitment|poste|post|stelle|\bstelle\w*|job)/i,
 
-        evenements: /(evenement|event|symposium|veranstaltung|jahrestagung|evento|conference|kongress|convegno|colloque|journee|tagung|giornata|webinaire|webinar|salon|messe|fiera|save the date|meet & greet)/i,
+        evenements: /(evenement|event|symposium|veranstaltung|jahrestagung|evento|conference|kongress|convegno|colloque|journee|tagung|giornata|webinaire|webinar|salon|messe|fiera|save the date|meet & greet|panel discussion)/i,
 
         communaute: /\b(communaute|communautes|community|gemeinschaft|comunita|annonce|ankündigung|annuncio|information|actualite|neuigkeit|notizia|news)\b/i,
 
