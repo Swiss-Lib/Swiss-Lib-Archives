@@ -113,6 +113,26 @@
       "_comment": "[Swiss-Lib] ABI Technik: Bibliotheksmanagementsysteme und ABI Technik-Preis",
       "category": "communaute"
     },
+    "Week-of-Mon-20260831/000184": {
+      "_comment": "[Swiss-Lib] Libreas - 2nd attempt",
+      "category": "communaute"
+    },
+    "Week-of-Mon-20260831/000176": {
+      "_comment": "[Swiss-Lib] Veröffentlichung der neuen Bibliotheksstatistik",
+      "category": "communaute"
+    },
+    "Week-of-Mon-20260831/000185": {
+      "_comment": "[Swiss-Lib] Stehsammler und Saatgutbibliothek Zubehör Gratis",
+      "category": "ressources"
+    },
+    "Week-of-Mon-20260831/000186": {
+      "_comment": "[Swiss-Lib] La nouvelle BCU Fribourg a ouvert ses portes",
+      "category": "communaute"
+    },
+    "Week-of-Mon-20260831/000187": {
+      "_comment": "[Swiss-Lib] Die neue KUB Freiburg hat ihre Türen geöffnet",
+      "category": "communaute"
+    },
     "Week-of-Mon-20260713/000086": {
       "_comment": "[Swiss-Lib] Swiss-Lib post from laura.kindler at hesav.ch requires approval",
       "rename": "[Emploi] Bibliothécaire scientifique HESAV"
@@ -129,6 +149,5 @@
       "_comment": "[Swiss-Lib] Stelleninserat",
       "rename": "[Arbeit] Bibliotheksmitarbeiter:in mit Schwerpunkt Bibliothekspädagogik (60%) - Winterthurer Bibliotheken"
     }
-
   }
 }
