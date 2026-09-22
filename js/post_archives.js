@@ -11,8 +11,6 @@ async function init() {
     origin = "https://listserv.linguistlist.org/pipermail/swiss-lib/" + id;
     id = id.replace(/\.html$/i, '');
 
-    console.log(id);
-
     fetch(
     `https://archive-swisslib.deepmining.ch/post_archives.php?id=${encodeURIComponent(id)}`
     )

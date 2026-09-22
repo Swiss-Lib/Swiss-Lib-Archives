@@ -10,11 +10,6 @@ async function loadPostRules() {
         POST_RULES =
             await response.json();
 
-        console.log(
-            "Règles chargées",
-            POST_RULES
-        );
-
     } catch(error) {
 
         console.error(error);
