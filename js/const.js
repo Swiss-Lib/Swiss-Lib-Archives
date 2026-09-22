@@ -34,7 +34,7 @@ const FILTERS = {
 
         formations: /(formation\s+continue|formation|formations|continuing\s+professional\s+development|weiterbildung|weiterbildungskurs|ausbildung|formazione\s+continua|competences|competencies|skills|kompetenzen|competenze|CAS|MAS|DAS)/i,
 
-        ressources: /(ressource|ressources|resource|ressourcen|risorsa|outil|tool|werkzeug|strumento|guide|leitfaden|guida|publication|publikation|pubblicazione|rapport|bericht|rapporto|gratis abzugeben)/i,
+        ressources: /(ressource|ressources|resource|ressourcen|risorsa|outil|tool|werkzeug|strumento|guide|ratgeber|leitfaden|guida|publication|publikation|pubblicazione|rapport|bericht|rapporto|gratis abzugeben)/i,
 
         recherches: /(recherches?\s+et\s+contributions?|recherche|contribution|forschung|ricerca|appel|aufruf|chiamata|call|enquete|umfrage|sondaggio|survey|collaborat|projet|projekt|progetto|call(?:\s+of|\s+for)?\s+papers)/i,
 

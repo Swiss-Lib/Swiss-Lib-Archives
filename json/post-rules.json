@@ -33,6 +33,10 @@
       "_comment": "WG: [extern] Fwd: [Communaute] Gratis abzugeben: Bibliotheksmaterial aufgrund unseres Umzugs",
       "hidden": true
     },
+    "Week-of-Mon-20260921/000220": {
+      "_comment": "[Swiss-Lib] [Arbeit] Praktikum für das Bachelorstudium oder MAS Studierende Informationswissenschaft -- PBZ Zürich",
+      "hidden": true
+    },
     "Week-of-Mon-20260518/000007": {
       "_comment": "Soirée du GRBV - Prix romand de bibliothéconomie 2025",
       "category": "evenements"
@@ -156,6 +160,10 @@
       "Week-of-Mon-20260817/000151": {
       "_comment": "[Swiss-Lib] Stelleninserat",
       "rename": "[Arbeit] Bibliotheksmitarbeiter:in mit Schwerpunkt Bibliothekspädagogik (60%) - Winterthurer Bibliotheken"
+    },
+      "Week-of-Mon-20260921/000221": {
+      "_comment": "[Swiss-Lib] RE : [Arbeit] Praktikum für das Bachelorstudium oder MAS Studierende Informationswissenschaft -- PBZ Zürich",
+      "rename": "[Arbeit] Praktikum für das Bachelorstudium oder MAS Studierende Informationswissenschaft -- PBZ Zürich"
     }
   }
 }
