@@ -109,7 +109,7 @@ const TAGS = {
 const LANGUAGES = {
     fr: /\b(le|la|les|des|et|de|du|pour|avec|questionnaire|recherche|emploi|offre|formation|formations|événement|événements|rappel|congrès|bibliothèque|rentrée|poste|candidature|collaborateur)\b/i,
 
-    de: /\b(der|die|das|den|dem|und|von|im|für|mit|forschung|arbeit|veranstaltung|veranstaltungen|kongress|bibliothek|stelle|\bstelle\w*|inserat|bewerbung|weiterbildung|praktikumsstelle|praktikum|publikationsberatung|\bpublikation\w*|abzugeben)\b/i,
+    de: /\b(der|die|das|den|dem|und|von|im|für|mit|forschung|arbeit|veranstaltung|veranstaltungen|kongress|bibliothek|stelle|\bstelle\w*|inserat|bewerbung|weiterbildung|herbstfortbildung|praktikumsstelle|praktikum|publikationsberatung|\bpublikation\w*|abzugeben)\b/i,
 
     it: /\b(lo|gli|della|delle|dello|dei|per|con|ricerca|lavoro|evento|eventi|congresso|biblioteca|formazione|candidatura|chiusura|piattaforma|opzioni|newsletter)\b/i,
 
