@@ -153,6 +153,10 @@
       "_comment": "[Swiss-Lib] 16-18 Humanités numériques, Bibliothèque de Genève, 13.10.2026: Un hub pour les imprimés réformés romands",
       "category": "evenements"
     },
+    "Week-of-Mon-20261005/000270": {
+      "_comment": "Empfangstheke kostengünstig abzugeben",
+      "category": "communaute"
+    },
     "Week-of-Mon-20260713/000086": {
       "_comment": "[Swiss-Lib] Swiss-Lib post from laura.kindler at hesav.ch requires approval",
       "rename": "[Emploi] Bibliothécaire scientifique HESAV"
@@ -176,6 +180,10 @@
       "Week-of-Mon-20260928/000239": {
       "_comment": "[Swiss-Lib] Arbeit",
       "rename": "[Arbeit] Bibliothekar/in Katalogisierung 50%"
+    },
+      "Week-of-Mon-20261012/000274": {
+      "_comment": "[Swiss-Lib] Arbeit",
+      "rename": "[Arbeit] Mitarbeiter:in Bibliothek 80%"
     }
   }
 }
