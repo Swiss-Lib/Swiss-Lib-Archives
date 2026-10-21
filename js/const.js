@@ -27,7 +27,7 @@ const FILTERS = {
 
         communaute: /\b(communaute|communautes|community|gemeinschaft|comunita|annonce|ankündigung|annuncio|information|actualite|neuigkeit|notizia|news)\b/i,
 
-        formations: /(formation\s+continue|formation|formations|continuing\s+professional\s+development|weiterbildung|weiterbildungskurs|ausbildung|herbstfortbildung|formazione\s+continua|competences|competencies|skills|kompetenzen|competenze|CAS|MAS|DAS)/i,
+        formations: /(formation\s+continue|formation|formations|continuing\s+professional\s+development|weiterbildung|weiterbildungskurs|ausbildung|herbstfortbildung|formazione\s+continua|formazione|competences|competencies|skills|kompetenzen|competenze|CAS|MAS|DAS)/i,
 
         ressources: /(ressource|ressources|resource|ressourcen|risorsa|outil|tool|werkzeug|strumento|guide|ratgeber|leitfaden|guida|publication|publikation|pubblicazione|rapport|bericht|rapporto|gratis abzugeben)/i,
 
