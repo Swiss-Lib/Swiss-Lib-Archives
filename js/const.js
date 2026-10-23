@@ -52,6 +52,7 @@ const TAGS = {
     "stellenausschreibung": "emploi",
     "stellenanzeige": "emploi",
     "stelleninserat": "emploi",
+    "praktikum": "emploi",
 
     // Variantes it
     "offerta di lavoro": "emploi",
