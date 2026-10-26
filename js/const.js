@@ -99,6 +99,7 @@ const TAGS = {
     "communaute": "communaute",
     "communauté": "communaute",
     "gemeinschaft": "communaute",
+    "publikation" : "communaute",
     "comunita": "communaute",
     "comunità": "communaute",
 
