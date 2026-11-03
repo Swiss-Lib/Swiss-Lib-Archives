@@ -23,13 +23,13 @@ const FILTERS = {
 
         emploi: /(annonce|%|emploi|stage|apprentissage|pre.stage|pré.stage|hes|cdi|cdd|demande.emploi|spontan|arbeit|praktikum|lehrstelle|fh.vorpraktikum|vorpraktikum|unbefristet|befristet|einstellung|spontanbewerbung|lavoro|apprendistato|tirocinio|pre.tirocinio|sup|cti|ctd|candidatura|vacancy|hiring|recruitment|poste|post|stelle|\bstelle\w*|job)/i,
 
-        evenements: /(evenement|event|symposium|veranstaltung|jahrestagung|vernetzungsanlass|evento|conference|kongress|convegno|colloque|seminare|journee|tagung|giornata|webinaire|webinar|workshop|workshops|salon|messe|fiera|save the date|meet & greet|meet-up|panel discussion|fête)/i,
+        evenements: /(evenement|leçon.inaugurale|event|symposium|veranstaltung|jahrestagung|vernetzungsanlass|evento|conference|kongress|convegno|colloque|seminare|journee|tagung|giornata|webinaire|webinar|workshop|workshops|salon|messe|fiera|save the date|meet & greet|meet-up|panel discussion|fête)/i,
 
         communaute: /\b(communaute|communautes|community|gemeinschaft|comunita|annonce|ankündigung|annuncio|information|actualite|neuigkeit|notizia|news)\b/i,
 
         formations: /(formation\s+continue|formation|formations|continuing\s+professional\s+development|weiterbildung|weiterbildungskurs|ausbildung|herbstfortbildung|formazione\s+continua|formazione|competences|competencies|skills|kompetenzen|competenze|CAS|MAS|DAS)/i,
 
-        ressources: /(ressource|ressources|resource|ressourcen|risorsa|outil|tool|werkzeug|strumento|guide|ratgeber|leitfaden|guida|publication|publikation|pubblicazione|rapport|bericht|rapporto|gratis abzugeben)/i,
+        ressources: /(ressource|ressources|resource|ressourcen|risorsa|outil|tool|werkzeug|strumento|guide|don|ratgeber|leitfaden|guida|publication|publikation|pubblicazione|rapport|bericht|rapporto|gratis abzugeben)/i,
 
         recherches: /(recherches?\s+et\s+contributions?|recherche|contribution|forschung|ricerca|appel|aufruf|chiamata|call|enquete|umfrage|sondaggio|survey|collaborat|projet|projekt|progetto|call(?:\s+of|\s+for)?\s+papers)/i,
 
@@ -91,6 +91,7 @@ const TAGS = {
     "ressource": "ressources",
     "ressources": "ressources",
     "ressource(s)": "ressources",
+    "don mobilier" : "ressources",
     "ressourcen": "ressources",
     "risorsa": "ressources",
     "risorse": "ressources",
