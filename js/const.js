@@ -68,6 +68,7 @@ const TAGS = {
     "veranstaltungen": "evenements",
     "evento": "evenements",
     "eventi": "evenements",
+    "event" : "evenements",
 
     // Recherches
     "recherche": "recherches",
